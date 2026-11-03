@@ -1,0 +1,90 @@
+// This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © hectorldu
+//@version=6
+indicator("Look-ahead leak demo: request.security", shorttitle = "Leak demo", overlay = true)
+
+// ── Inputs ──────────────────────────────────────────────────────────────
+htf = input.timeframe("D", "Higher timeframe", tooltip = "Must be higher than the chart timeframe. Example: 1h chart with D.")
+
+if barstate.isfirst and timeframe.in_seconds(htf) <= timeframe.in_seconds()
+    runtime.error("Use a chart timeframe lower than the higher timeframe input (for example, a 1h chart with D).")
+
+// ── Three ways to read the same higher-timeframe close ──────────────────
+// 1) LEAKING: on historical bars, every chart bar of the period already sees the period's FINAL close.
+leak   = request.security(syminfo.tickerid, htf, close, lookahead = barmerge.lookahead_on)
+// 2) DEFAULT: on history it only updates when the period closes; in real time it follows the forming bar (repaints).
+repnt  = request.security(syminfo.tickerid, htf, close)
+// 3) SEALED: the last CLOSED period's close. Same value on history and in real time.
+sealed = request.security(syminfo.tickerid, htf, close[1], lookahead = barmerge.lookahead_on)
+
+plot(leak,   "1 Leaking: lookahead_on + close",   color = color.new(color.red, 0),    linewidth = 2, style = plot.style_stepline)
+plot(repnt,  "2 Default: lookahead_off",          color = color.new(color.orange, 0), linewidth = 1, style = plot.style_stepline)
+plot(sealed, "3 Sealed: lookahead_on + close[1]", color = color.new(color.teal, 0),   linewidth = 2, style = plot.style_stepline)
+
+// ── Same naive rule for all three lines ─────────────────────────────────
+// Rule: "if the line is above the current close, price will finish the period higher" (and the reverse).
+// We score it on historical bars only, when the period ends: did the period's final close move the predicted way?
+var array<float> entryClose = array.new<float>()
+var array<int>   sigLeak    = array.new<int>()
+var array<int>   sigRepnt   = array.new<int>()
+var array<int>   sigSealed  = array.new<int>()
+
+var int hitLeak   = 0
+var int nLeak     = 0
+var int hitRepnt  = 0
+var int nRepnt    = 0
+var int hitSealed = 0
+var int nSealed   = 0
+
+newPeriod = timeframe.change(htf)
+prevClose = close[1]
+
+score(int sig, int move) =>
+    s = nz(sig)
+    [s != 0 ? 1 : 0, s != 0 and s == move ? 1 : 0]
+
+if newPeriod and array.size(entryClose) > 0
+    // prevClose is the final close of the period that just ended.
+    for i = 0 to array.size(entryClose) - 1
+        move = int(math.sign(prevClose - array.get(entryClose, i)))
+        if move != 0
+            [n1, h1] = score(array.get(sigLeak, i), move)
+            [n2, h2] = score(array.get(sigRepnt, i), move)
+            [n3, h3] = score(array.get(sigSealed, i), move)
+            nLeak     += n1
+            hitLeak   += h1
+            nRepnt    += n2
+            hitRepnt  += h2
+            nSealed   += n3
+            hitSealed += h3
+    array.clear(entryClose)
+    array.clear(sigLeak)
+    array.clear(sigRepnt)
+    array.clear(sigSealed)
+
+if barstate.ishistory
+    array.push(entryClose, close)
+    array.push(sigLeak,   int(nz(math.sign(leak   - close))))
+    array.push(sigRepnt,  int(nz(math.sign(repnt  - close))))
+    array.push(sigSealed, int(nz(math.sign(sealed - close))))
+
+// ── Results table ───────────────────────────────────────────────────────
+pct(int h, int n) => n > 0 ? str.tostring(100.0 * h / n, "#.0") + " %" : "n/a"
+
+var table t = table.new(position.top_right, 3, 5, bgcolor = color.new(color.black, 5), border_width = 1)
+if barstate.islast
+    txt = color.white
+    table.cell(t, 0, 0, "Line (same rule)",               text_color = txt, text_size = size.small)
+    table.cell(t, 1, 0, "Hit rate, history",              text_color = txt, text_size = size.small)
+    table.cell(t, 2, 0, "Signals",                        text_color = txt, text_size = size.small)
+    table.cell(t, 0, 1, "1 Leaking: lookahead_on + close", text_color = color.rgb(255, 120, 120),    text_size = size.small)
+    table.cell(t, 1, 1, pct(hitLeak, nLeak),               text_color = color.rgb(255, 120, 120),    text_size = size.small)
+    table.cell(t, 2, 1, str.tostring(nLeak),               text_color = txt,          text_size = size.small)
+    table.cell(t, 0, 2, "2 Default: lookahead_off",        text_color = color.rgb(255, 190, 90), text_size = size.small)
+    table.cell(t, 1, 2, pct(hitRepnt, nRepnt),             text_color = color.rgb(255, 190, 90), text_size = size.small)
+    table.cell(t, 2, 2, str.tostring(nRepnt),              text_color = txt,          text_size = size.small)
+    table.cell(t, 0, 3, "3 Sealed: lookahead_on + close[1]", text_color = color.rgb(90, 220, 200), text_size = size.small)
+    table.cell(t, 1, 3, pct(hitSealed, nSealed),           text_color = color.rgb(90, 220, 200),   text_size = size.small)
+    table.cell(t, 2, 3, str.tostring(nSealed),             text_color = txt,          text_size = size.small)
+    table.cell(t, 0, 4, "Line 1 cannot exist in real time. Line 2 changes in real time.", text_color = txt, text_size = size.tiny)
+    table.merge_cells(t, 0, 4, 2, 4)
