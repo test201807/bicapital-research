@@ -15,6 +15,17 @@ This repository keeps the article sources, the figures and the data behind each 
 | 2026-11-06 | Why your TradingView backtest lies: the indicator that "worked" and returned +20% in almost 8 years | [`articles/2026-11-B17`](articles/2026-11-B17) |
 | 2026-11-08 | My 17-parameter system did not beat buying and holding Bitcoin | [`articles/2026-11-I05`](articles/2026-11-I05) |
 | 2026-11-11 | Prop-firm challenges: out of every 100 who try without an edge, 93 lose the fee | [`articles/2026-11-B11`](articles/2026-11-B11) |
+| 2026-11-13 | The altcoin season myth: altcoins amplify the falls, not the rises | [`articles/2026-11-I11`](articles/2026-11-I11) |
+| 2026-11-15 | "The day's high or low is set in the first hour 7 times out of 10": it is geometry | [`articles/2026-11-B18`](articles/2026-11-B18) |
+| 2026-11-18 | Survivorship bias in crypto: more than half the coins of 2022-24 no longer trade | [`articles/2026-11-I12`](articles/2026-11-I12) |
+| 2026-11-20 | Chart patterns: 28 figures against chance, on eight chart types | [`articles/2026-11-B07`](articles/2026-11-B07) |
+| 2026-11-22 | My own strategy performed the same as entering at random | [`articles/2026-11-B12`](articles/2026-11-B12) |
+| 2026-11-25 | Binance funding: from 30% a year to 2% | [`articles/2026-11-M06`](articles/2026-11-M06) |
+| 2026-11-27 | Renko and Heikin Ashi: the trends the chart draws by itself | [`articles/2026-11-B19`](articles/2026-11-B19) |
+| 2026-11-29 | "It's on a streak": switching strategies on and off by how they are doing does not work | [`articles/2026-11-M15`](articles/2026-11-M15) |
+| 2026-12-04 | Holding index CFDs overnight: the swap turns +6.7% into −4.8% | [`articles/2026-12-B13`](articles/2026-12-B13) |
+| 2026-12-06 | Support and resistance: last month's and last year's highs do not stop price | [`articles/2026-12-M16`](articles/2026-12-M16) |
+| 2026-12-09 | Nine method errors I found in my own research | [`articles/2026-12-I20`](articles/2026-12-I20) |
 
 TradingView (open source): [`tradingview/TV01-lookahead-leak-demo`](tradingview/TV01-lookahead-leak-demo), a Pine Script
 that shows how `request.security` with `lookahead_on` leaks the future (same rule: 100.0% hit rate with the leak, 52.0%
