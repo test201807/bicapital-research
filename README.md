@@ -32,6 +32,8 @@ This repository keeps the article sources, the figures and the data behind each 
 TradingView (open source): [`tradingview/TV01-lookahead-leak-demo`](tradingview/TV01-lookahead-leak-demo), a Pine Script
 that shows how `request.security` with `lookahead_on` leaks the future (same rule: 100.0% hit rate with the leak, 52.0%
 without it, on BTCUSDT 1h with a daily higher timeframe). Published on TradingView as "Look-ahead leak demo: request.security".
+[`tradingview/TV02-heikin-ashi-streaks`](tradingview/TV02-heikin-ashi-streaks): how often a Heikin Ashi colour repeats vs how
+often the next real price move follows it (BTCUSDT daily: 76.4% vs 48.5%). Published on TradingView with an educational idea.
 
 Datasets: [`datasets/el-nino-ecuador-2026`](datasets/el-nino-ecuador-2026), 17 sourced tables on El Niño in Ecuador
 (ocean, rainfall, damage, crops, dengue, prices), with the code that redraws every chart.

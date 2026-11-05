@@ -1,0 +1,55 @@
+// This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © hectorldu
+//@version=6
+indicator("Heikin Ashi streaks: chart colour vs real price", shorttitle = "HA streaks", overlay = true)
+
+// Heikin Ashi candles computed from the ordinary OHLC of the chart, so the script runs on a normal candle chart.
+showHA = input.bool(false, "Draw Heikin Ashi candles")
+
+haClose = (open + high + low + close) / 4
+var float haOpen = na
+haOpen := na(haOpen[1]) ? (open + close) / 2 : (haOpen[1] + haClose[1]) / 2
+haHigh = math.max(high, math.max(haOpen, haClose))
+haLow = math.min(low, math.min(haOpen, haClose))
+plotcandle(showHA ? haOpen : na, showHA ? haHigh : na, showHA ? haLow : na, showHA ? haClose : na, "Heikin Ashi",
+     color = haClose >= haOpen ? color.teal : color.red, wickcolor = color.gray, bordercolor = color.gray)
+
+dirO = math.sign(close - open)      // ordinary candle colour: +1 green, -1 red, 0 doji
+dirH = math.sign(haClose - haOpen)  // Heikin Ashi candle colour
+move = math.sign(close - close[1])  // what price really did on this bar
+
+// n = pairs counted, s = pairs where the next unit went the same way
+var int nO = 0  // ordinary candle followed by a candle of the same colour
+var int sO = 0
+var int nH = 0  // Heikin Ashi candle followed by a Heikin Ashi candle of the same colour
+var int sH = 0
+var int nR = 0  // Heikin Ashi colour followed by a real price move in that direction
+var int sR = 0
+
+if bar_index > 1
+    if dirO != 0 and dirO[1] != 0
+        nO += 1
+        sO += dirO == dirO[1] ? 1 : 0
+    if dirH != 0 and dirH[1] != 0
+        nH += 1
+        sH += dirH == dirH[1] ? 1 : 0
+    if dirH[1] != 0 and move != 0
+        nR += 1
+        sR += move == dirH[1] ? 1 : 0
+
+pct(s, n) => n > 0 ? str.tostring(100.0 * s / n, "#.0") + "%" : "n/a"
+
+var table t = table.new(position.top_right, 3, 4, bgcolor = color.new(color.black, 15), border_width = 1)
+if barstate.islast
+    table.cell(t, 0, 0, "Next unit goes the same way", text_color = color.white, text_size = size.small)
+    table.cell(t, 1, 0, "Rate", text_color = color.white, text_size = size.small)
+    table.cell(t, 2, 0, "Pairs", text_color = color.white, text_size = size.small)
+    table.cell(t, 0, 1, "Heikin Ashi colour → next HA colour", text_color = color.white, text_size = size.small)
+    table.cell(t, 1, 1, pct(sH, nH), text_color = color.orange, text_size = size.small)
+    table.cell(t, 2, 1, str.tostring(nH), text_color = color.white, text_size = size.small)
+    table.cell(t, 0, 2, "Ordinary candle → next candle", text_color = color.white, text_size = size.small)
+    table.cell(t, 1, 2, pct(sO, nO), text_color = color.white, text_size = size.small)
+    table.cell(t, 2, 2, str.tostring(nO), text_color = color.white, text_size = size.small)
+    table.cell(t, 0, 3, "Heikin Ashi colour → next real price move", text_color = color.white, text_size = size.small)
+    table.cell(t, 1, 3, pct(sR, nR), text_color = color.aqua, text_size = size.small)
+    table.cell(t, 2, 3, str.tostring(nR), text_color = color.white, text_size = size.small)
