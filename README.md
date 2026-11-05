@@ -18,6 +18,7 @@ This repository keeps the article sources, the figures and the data behind each 
 | 2026-11-11 | Prop-firm challenges: out of every 100 who try without an edge, 93 lose the fee | [`articles/2026-11-B11`](articles/2026-11-B11) |
 | 2026-11-13 | The altcoin season myth: altcoins amplify the falls, not the rises | [`articles/2026-11-I11`](articles/2026-11-I11) |
 | 2026-11-15 | "The day's high or low is set in the first hour 7 times out of 10": it is geometry | [`articles/2026-11-B18`](articles/2026-11-B18) |
+| 2026-11-17 | The factory stops being a building: a distributed production network for Ecuador (white paper, public edition) | [`articles/2026-11-E02`](articles/2026-11-E02) · PDF: [`whitepapers/produccion-distribuida-ecuador`](whitepapers/produccion-distribuida-ecuador) |
 | 2026-11-18 | Survivorship bias in crypto: more than half the coins of 2022-24 no longer trade | [`articles/2026-11-I12`](articles/2026-11-I12) |
 | 2026-11-20 | Chart patterns: 28 figures against chance, on eight chart types | [`articles/2026-11-B07`](articles/2026-11-B07) |
 | 2026-11-22 | My own strategy performed the same as entering at random | [`articles/2026-11-B12`](articles/2026-11-B12) |
@@ -34,6 +35,9 @@ without it, on BTCUSDT 1h with a daily higher timeframe). Published on TradingVi
 
 Datasets: [`datasets/el-nino-ecuador-2026`](datasets/el-nino-ecuador-2026), 17 sourced tables on El Niño in Ecuador
 (ocean, rainfall, damage, crops, dengue, prices), with the code that redraws every chart.
+
+White papers: [`whitepapers/produccion-distribuida-ecuador`](whitepapers/produccion-distribuida-ecuador), a distributed
+production network for Ecuador (central hub + automated last-mile cells + orchestration software), public edition, in Spanish.
 
 Software: [causality-probe](https://github.com/test201807/causality-probe), a tool to detect look-ahead bias in backtests.
 
