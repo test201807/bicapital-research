@@ -1,10 +1,10 @@
 # La fábrica deja de ser un edificio: una red de producción distribuida para Ecuador
 
-*Publico la edición abierta de un white paper que escribí en julio: un hub central que fabrica el producto intermedio,
-células automáticas pequeñas que lo terminan cerca del cliente y un software que gobierna la red. Doce casos, un mapa
-regulatorio y una hoja de ruta con puertas.*
+*La edición abierta de un white paper: un hub central fabrica el producto intermedio, células automáticas pequeñas lo
+terminan cerca del cliente y un software gobierna la red.*
 
-Este artículo resume el documento. La versión completa en PDF (17 secciones y 6 anexos) está abierta al final. No es un
+Publico la edición abierta de un white paper que escribí en julio, con doce casos, un mapa regulatorio y una hoja de
+ruta con puertas. Este artículo resume el documento. La versión completa en PDF (17 secciones y 6 anexos) está abierta al final. No es un
 plan financiero ni una oferta: es un modelo para discutir, con sus riesgos a la vista.
 
 ## La idea en un párrafo

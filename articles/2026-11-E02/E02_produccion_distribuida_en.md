@@ -1,10 +1,10 @@
 # The factory stops being a building: a distributed production network for Ecuador
 
-*I am publishing the open edition of a white paper I wrote in July: a central hub that makes the intermediate product,
-small automated cells that finish it near the customer, and software that runs the network. Twelve cases, a regulatory
-map and a roadmap with gates.*
+*The open edition of a white paper: a central hub makes the intermediate product, small automated cells finish it near
+the customer, and software runs the network.*
 
-This article summarises the document. The full version (a PDF in Spanish, with 17 sections and 6 annexes) is linked at the
+I am publishing the open edition of a white paper I wrote in July, with twelve cases, a regulatory map and a roadmap
+with gates. This article summarises the document. The full version (a PDF in Spanish, with 17 sections and 6 annexes) is linked at the
 end. It is not a financial plan or an offer: it is a model for discussion, with its risks in plain sight.
 
 ## The idea in one paragraph
