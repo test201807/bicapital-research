@@ -34,6 +34,8 @@ that shows how `request.security` with `lookahead_on` leaks the future (same rul
 without it, on BTCUSDT 1h with a daily higher timeframe). Published on TradingView as "Look-ahead leak demo: request.security".
 [`tradingview/TV02-heikin-ashi-streaks`](tradingview/TV02-heikin-ashi-streaks): how often a Heikin Ashi colour repeats vs how
 often the next real price move follows it (BTCUSDT daily: 76.4% vs 48.5%). Published on TradingView with an educational idea.
+[`tradingview/TV03-first-hour-vs-chance`](tradingview/TV03-first-hour-vs-chance): "the day's high or low is set in the first
+hour", counted on the real bars and on random-direction paths built from the same bars (SPY 15 min: 73.1% vs 72.2%).
 
 Datasets: [`datasets/el-nino-ecuador-2026`](datasets/el-nino-ecuador-2026), 17 sourced tables on El Niño in Ecuador
 (ocean, rainfall, damage, crops, dengue, prices), with the code that redraws every chart.

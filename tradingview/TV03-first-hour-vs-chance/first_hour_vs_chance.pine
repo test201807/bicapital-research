@@ -1,0 +1,128 @@
+// This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © hectorldu
+//@version=6
+indicator("First-hour high/low: real market vs random direction", shorttitle = "First hour vs chance", overlay = true)
+
+// "The session's high or low is set in the first hour 7 times out of 10." This script counts it on the chart and,
+// on the same bars, on random paths where every bar keeps its size but gets a random direction.
+sess     = input.session("0930-1600", "Session")
+tz       = input.string("America/New_York", "Session time zone")
+firstMin = input.int(60, "First window (minutes)", minval = 1)
+reps     = input.int(20, "Random paths per session", minval = 1, maxval = 100)
+seed     = input.int(7, "Random seed")
+
+// A new session starts when the bar enters the session window or when the calendar day changes (charts that show only
+// regular hours have no gap bars between sessions)
+inSess  = not na(time(timeframe.period, sess, tz))
+dayKey  = year(time, tz) * 10000 + month(time, tz) * 100 + dayofmonth(time, tz)
+newSess = inSess and (not inSess[1] or dayKey != dayKey[1])
+
+var int sessStart = na
+var bool active = false
+
+// Real market: session extremes and whether each one was set inside the first window
+var float rHi = na
+var float rLo = na
+var bool rHiF = false
+var bool rLoF = false
+var float rFhHi = na
+var float rFhLo = na
+var float rFhC = na
+
+// Random paths: the same state per path
+var array<float> sPc   = array.new_float(100, na)
+var array<float> sHi   = array.new_float(100, na)
+var array<float> sLo   = array.new_float(100, na)
+var array<bool>  sHiF  = array.new_bool(100, false)
+var array<bool>  sLoF  = array.new_bool(100, false)
+var array<float> sFhHi = array.new_float(100, na)
+var array<float> sFhLo = array.new_float(100, na)
+var array<float> sFhC  = array.new_float(100, na)
+
+// Counters: sessions, sessions with high or low in the first window, sessions whose first window closed in the upper half
+// of its range, and how many of those already had the session low inside the first window
+var int days = 0
+var int hit = 0
+var int nUp = 0
+var int lowIn = 0
+var int rDays = 0
+var int rHit = 0
+var int rNUp = 0
+var int rLowIn = 0
+
+if newSess
+    // close the previous session
+    if active
+        days += 1
+        hit += rHiF or rLoF ? 1 : 0
+        if rFhC > (rFhHi + rFhLo) / 2
+            nUp += 1
+            lowIn += rLoF ? 1 : 0
+        for i = 0 to reps - 1
+            rDays += 1
+            rHit += array.get(sHiF, i) or array.get(sLoF, i) ? 1 : 0
+            if array.get(sFhC, i) > (array.get(sFhHi, i) + array.get(sFhLo, i)) / 2
+                rNUp += 1
+                rLowIn += array.get(sLoF, i) ? 1 : 0
+    // open the new one
+    active := true
+    sessStart := time
+    rHi := na
+    rLo := na
+    rFhHi := na
+    rFhLo := na
+    for i = 0 to reps - 1
+        array.set(sPc, i, close[1])
+        array.set(sHi, i, na)
+        array.set(sLo, i, na)
+        array.set(sFhHi, i, na)
+        array.set(sFhLo, i, na)
+
+inFirst = inSess and active and (time - sessStart) < firstMin * 60000
+
+if inSess and active
+    // real bar
+    if na(rHi) or high > rHi
+        rHi := high
+        rHiF := inFirst
+    if na(rLo) or low < rLo
+        rLo := low
+        rLoF := inFirst
+    if inFirst
+        rFhHi := na(rFhHi) ? high : math.max(rFhHi, high)
+        rFhLo := na(rFhLo) ? low : math.min(rFhLo, low)
+        rFhC := close
+    // random bars: same moves from the previous close, direction flipped at random
+    for i = 0 to reps - 1
+        pc = array.get(sPc, i)
+        up = math.random(0.0, 1.0, seed) < 0.5
+        h2 = pc + (up ? high - close[1] : close[1] - low)
+        l2 = pc + (up ? low - close[1] : close[1] - high)
+        c2 = pc + (up ? close - close[1] : close[1] - close)
+        if na(array.get(sHi, i)) or h2 > array.get(sHi, i)
+            array.set(sHi, i, h2)
+            array.set(sHiF, i, inFirst)
+        if na(array.get(sLo, i)) or l2 < array.get(sLo, i)
+            array.set(sLo, i, l2)
+            array.set(sLoF, i, inFirst)
+        if inFirst
+            array.set(sFhHi, i, na(array.get(sFhHi, i)) ? h2 : math.max(array.get(sFhHi, i), h2))
+            array.set(sFhLo, i, na(array.get(sFhLo, i)) ? l2 : math.min(array.get(sFhLo, i), l2))
+            array.set(sFhC, i, c2)
+        array.set(sPc, i, c2)
+
+pct(s, n) => n > 0 ? str.tostring(100.0 * s / n, "#.0") + "%" : "n/a"
+
+var table t = table.new(position.top_right, 3, 4, bgcolor = color.new(color.black, 15), border_width = 1)
+if barstate.islast
+    table.cell(t, 0, 0, "Completed sessions: " + str.tostring(days), text_color = color.white, text_size = size.small)
+    table.cell(t, 1, 0, "Real", text_color = color.white, text_size = size.small)
+    table.cell(t, 2, 0, "Random direction", text_color = color.white, text_size = size.small)
+    table.cell(t, 0, 1, "Session high or low inside the first window", text_color = color.white, text_size = size.small)
+    table.cell(t, 1, 1, pct(hit, days), text_color = color.orange, text_size = size.small)
+    table.cell(t, 2, 1, pct(rHit, rDays), text_color = color.aqua, text_size = size.small)
+    table.cell(t, 0, 2, "First window ends in its upper half → session low already in", text_color = color.white, text_size = size.small)
+    table.cell(t, 1, 2, pct(lowIn, nUp), text_color = color.orange, text_size = size.small)
+    table.cell(t, 2, 2, pct(rLowIn, rNUp), text_color = color.aqua, text_size = size.small)
+    table.cell(t, 0, 3, "Random: each bar keeps its size, direction drawn at random (" + str.tostring(reps) + " paths)", text_color = color.gray, text_size = size.tiny)
+    table.merge_cells(t, 0, 3, 2, 3)
