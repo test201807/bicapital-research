@@ -53,3 +53,11 @@ Software: [causality-probe](https://github.com/test201807/causality-probe), a to
 
 Investigación cuantitativa independiente. Los artículos se publican en Substack en inglés y en español; aquí están sus
 fuentes, las figuras y los datos de cada gráfico. *Contenido educativo; no es asesoría de inversión.*
+
+## Portfolio
+
+The real BICAPITAL crypto portfolio (40% BTC, 60% across 21 altcoins), percentages only:
+- Interactive report: https://test201807.github.io/bicapital-research/portfolio/
+- Article: [articles/2026-11-I37](articles/2026-11-I37)
+- Live TradingView tracker (open source): [tradingview/TV08-portfolio-tracker](tradingview/TV08-portfolio-tracker)
+- Data (CSV): [portfolio/datos](portfolio/datos)
