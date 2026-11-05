@@ -1,0 +1,29 @@
+TITLE: A real 40/60 crypto portfolio: bought low, still behind BTC
+CATEGORY: Analysis (categories: Beyond technical analysis, Fundamental analysis, Trend analysis)
+SYMBOL: BINANCE:BTCUSDT, 1 day, with the public script TV08 on the chart
+
+This is a real spot portfolio, run with real money and published in percentages only, so anyone can follow it. The open-source script on this chart tracks it live: the blue line is the portfolio's return on its average cost, the orange line is BTC with the same cash flows, and the table shows every coin.
+
+The portfolio
+- 40% BTC, capped. The other 60% is split equally across 21 altcoins (2.86% each): SOL, TAO, PENGU, PUMP, SYRUP, ETHFI, ONDO, JTO, ASTER, VIRTUAL, PENDLE, NEAR, SKY, POL, MORPHO, MET, RED, BERA, BABY, GPS and ORCA.
+- Entries are staged with limit orders at 1.8, 3.2 and 4.5 ATR below the price, adjusted to supports. Coins with heavy token unlocks ahead get half the allocation.
+- Spot only, no leverage, 100% invested. 519 trades since 20 August.
+
+Where we bought
+Against each coin's whole history of closing prices (leaving out the first month after listing), the entries are low. The median altcoin was bought 70% below its highest close, at 16 out of 100 in its own range, where 0 is the all-time low. 19 of the 22 coins were bought in the lower half of their history and 15 in the lowest quarter. BTC was bought 37% below its highest close.
+Two things to read next to that: within the last year alone the entries sit mid-range (weighted percentile 56), and six coins still have a falling 200-day average (BERA, BABY, SYRUP, VIRTUAL, TAO, SKY), so their price can keep making new lows.
+
+Result so far (5 November)
+- Portfolio: -5.9% on cost. BTC only, same cash flows: -4.3%.
+- On 6 October the portfolio was 21.3% up against 6.8% for BTC. The October fall erased the lead: the average correlation of the altcoins with BTC is 0.51, so they behaved like a more volatile BTC.
+- The Binance hot-wallet hack of 29 October did not affect the portfolio. The market drop that came with it filled the buy ladder at good prices.
+- The coins with heavy supply weigh 10% and explain about a quarter of the loss.
+- The rules changed six times in 77 days; the latest change caps BTC at 40% and sold the excess to top up the altcoins.
+
+What to watch: whether buying low against history pays off once the altcoins' trend turns, or whether BTC alone keeps doing better. The script will be updated at each rebalance so the comparison stays honest.
+
+Own capital. Not investment advice, not an offer and not portfolio management for third parties.
+
+---
+ES
+Una cartera cripto real 40/60: compramos abajo y todavía va detrás de BTC. Cartera spot con dinero real, publicada solo en porcentajes para que cualquiera la siga. El script abierto del gráfico la sigue en vivo. 40 % BTC y 60 % en 21 alts a partes iguales. La alt mediana se compró 70 % bajo su cierre máximo y en el 16 de 100 de su historia; 19 de 22 monedas en la mitad baja. Resultado al 5-nov: −5,9 % sobre el coste frente a −4,3 % de BTC con los mismos flujos. El hackeo de Binance del 29-oct no afectó a la cartera y la caída llenó la escalera de compras a buen precio. Capital propio; no es asesoría de inversión.
