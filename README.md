@@ -14,6 +14,7 @@ This repository keeps the article sources, the figures and the data behind each 
 | 2026-11-01 | Decision diary no. 1 (October 2026): I lost to Bitcoin, and here is what I decided | [`articles/2026-10-I34`](articles/2026-10-I34) |
 | 2026-11-06 | Why your TradingView backtest lies: the indicator that "worked" and returned +20% in almost 8 years | [`articles/2026-11-B17`](articles/2026-11-B17) |
 | 2026-11-08 | My 17-parameter system did not beat buying and holding Bitcoin | [`articles/2026-11-I05`](articles/2026-11-I05) |
+| 2026-11-10 | El Niño 2026-27 in Ecuador: what the data say before the rains (data report) | [`articles/2026-11-E01`](articles/2026-11-E01) · data: [`datasets/el-nino-ecuador-2026`](datasets/el-nino-ecuador-2026) |
 | 2026-11-11 | Prop-firm challenges: out of every 100 who try without an edge, 93 lose the fee | [`articles/2026-11-B11`](articles/2026-11-B11) |
 | 2026-11-13 | The altcoin season myth: altcoins amplify the falls, not the rises | [`articles/2026-11-I11`](articles/2026-11-I11) |
 | 2026-11-15 | "The day's high or low is set in the first hour 7 times out of 10": it is geometry | [`articles/2026-11-B18`](articles/2026-11-B18) |
@@ -30,6 +31,9 @@ This repository keeps the article sources, the figures and the data behind each 
 TradingView (open source): [`tradingview/TV01-lookahead-leak-demo`](tradingview/TV01-lookahead-leak-demo), a Pine Script
 that shows how `request.security` with `lookahead_on` leaks the future (same rule: 100.0% hit rate with the leak, 52.0%
 without it, on BTCUSDT 1h with a daily higher timeframe). Published on TradingView as "Look-ahead leak demo: request.security".
+
+Datasets: [`datasets/el-nino-ecuador-2026`](datasets/el-nino-ecuador-2026), 17 sourced tables on El Niño in Ecuador
+(ocean, rainfall, damage, crops, dengue, prices), with the code that redraws every chart.
 
 Software: [causality-probe](https://github.com/test201807/causality-probe), a tool to detect look-ahead bias in backtests.
 
