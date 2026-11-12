@@ -1,0 +1,24 @@
+Este script muestra en el gráfico un experimento: un sistema que decide solo cuándo ajustar su estrategia, sin que nadie lo toque.
+
+La idea en pocas palabras
+Cuando una estrategia empieza a ir mal, casi todos la ajustamos a mano. Aquí lo hace un «piloto» automático llamado control PID: la misma idea que el termostato de una casa o el control de crucero de un coche. Si los resultados recientes se alejan de lo que esperaba, corrige y cambia a una versión vecina de la estrategia.
+
+Qué verás en el gráfico
+- Las operaciones de una familia de estrategias de rebote en EURUSD: comprar después de una caída fuerte y vender después de una subida fuerte (con RSI o bandas de Bollinger).
+- Cada recalibración aparece como una etiqueta con la versión elegida y el motivo del cambio (P, I o D, las tres partes del control PID).
+- Las 103 recalibraciones son las que tomó el sistema en el laboratorio, con fechas reales, de 2018 a mediados de 2025.
+
+Cómo usarlo
+- Gráfico EURUSD en 15 minutos (el script lee también las velas de 1 hora).
+- Ve a los años 2022-2025 para ver el periodo de examen, que el sistema no había usado para aprender.
+
+Resultados del laboratorio (con costes reales)
+- En los 3 años de examen hizo 816 operaciones. Arriesgando 1 % por operación, terminó cerca de +23 %, con una caída de alrededor de un 30 % a finales de 2024.
+- Repetido en 100 mercados inventados sin dirección (como un grupo de control), el mismo proceso perdía.
+- Es prometedor, pero todavía no está confirmado: se probaron muchas variantes, y casi todo el avance llegó en 2025. Hay una segunda ronda en marcha en más mercados y temporalidades.
+
+Limitaciones
+- TradingView no reproduce exactamente el laboratorio: otro proveedor de datos, otro spread y el relleno por vela. Las operaciones exactas son las del laboratorio.
+- Es una herramienta para estudiar cómo se comporta un sistema que se ajusta solo, no una señal para operar.
+
+Contenido educativo. No es asesoría de inversión.

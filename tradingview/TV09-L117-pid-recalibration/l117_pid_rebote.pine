@@ -1,0 +1,128 @@
+// This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © hectorldu · BICAPITAL Research · laboratorio L117 (versión B)
+//@version=5
+// VERSIÓN B 2026-11-11: fechas RT corregidas a milisegundos UTC (la original las truncaba y todo caía en la primera vela).
+// Calendario de recalibraciones embebido (103): fecha UTC → configuración (entrada × salida) y motivo.
+strategy("L117 · Sistema que se recalibra solo (PID, rebote) · EURUSD", overlay = true, pyramiding = 0, initial_capital = 100000, default_qty_type = strategy.percent_of_equity, default_qty_value = 10, commission_type = strategy.commission.percent, commission_value = 0.0025, max_labels_count = 500, max_lines_count = 500, max_bars_back = 500)
+var int[] RT = array.from(1514757600000, 1515416580000, 1516744560000, 1517242800000, 1520866140000, 1524503640000, 1528268760000, 1529355360000, 1543244160000, 1543788000000, 1544392800000, 1545602400000, 1547554200000, 1550440800000, 1551121560000, 1552251600000, 1558426740000, 1560372960000, 1561402500000, 1563268320000, 1563865260000, 1564952400000, 1566162000000, 1575545700000, 1576051320000, 1579471200000, 1581002880000, 1581890400000, 1584434880000, 1589185260000, 1589439660000, 1590134340000, 1591688520000, 1598265360000, 1600078380000, 1600759020000, 1601607060000, 1602276900000, 1602750540000, 1604395080000, 1605304500000, 1605477600000, 1609106400000, 1609711200000, 1612735200000, 1613340000000, 1613944800000, 1615755600000, 1616965200000, 1620594000000, 1622408400000, 1623013200000, 1623618000000, 1624222800000, 1633439340000, 1633909200000, 1634803800000, 1635161760000, 1635429720000, 1635886500000, 1637314140000, 1640704140000, 1653297360000, 1655067600000, 1657009500000, 1658138580000, 1664867100000, 1667811840000, 1668153000000, 1669598040000, 1671400800000, 1673958540000, 1675692900000, 1677448800000, 1678654800000, 1680005400000, 1683618000000, 1685044860000, 1689096480000, 1689972900000, 1690891920000, 1692611220000, 1695227400000, 1696341660000, 1696798800000, 1700431200000, 1701640800000, 1705960500000, 1711372020000, 1712523600000, 1722200400000, 1722805200000, 1727075760000, 1728906540000, 1729088880000, 1730105700000, 1731579840000, 1731681540000, 1732578780000, 1733123760000, 1737452100000, 1745360940000, 1749435000000)
+var int[] RC = array.from(2673, 2677, 2463, 2423, 2421, 2423, 2421, 2553, 2557, 2705, 2557, 2510, 2705, -1, 2705, -1, 2515, 2507, 2521, 2523, 2521, -1, 2381, 2301, 2221, 2693, 2713, 2237, 2236, 2232, 2234, 2232, 2234, 2232, 2236, 2232, 2552, 2632, 2712, 2714, 2674, 2663, 2703, 2663, 2703, 2701, 2663, 2357, 2670, 2668, 2620, 2594, 2562, -1, 2084, 2241, 2261, 2581, 2661, 2701, 2681, 2701, 2705, 2701, 2710, 2216, 2236, 2216, 2217, 2556, 2473, 2553, 2552, 2712, 2552, 2472, 2552, 2553, 2557, 2477, 2473, 2472, 2473, 2553, 2541, 2540, 2473, 2472, 2552, 2541, 2553, 2353, 2355, 2354, 2352, 2354, 2355, 2353, 2468, 2428, 2430, 2426, 2430)
+var int[] RM = array.from(0, 1, 1, 1, 1, 1, 1, 1, 1, 7, 7, 7, 1, 5, 6, 5, 1, 1, 1, 1, 1, 5, 7, 1, 1, 7, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 5, 1, 1, 1, 1, 3, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 2, 7, 3, 1, 7, 7, 1, 1, 1, 2, 1, 1, 2, 1, 1, 7, 7, 7, 1, 1, 7, 7, 7, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1)
+var string[] RS = array.from("INICIO: REV|H1|BB20_25|SIN|SL2|TRAIL3|BE0|P0|CORTE", "P: REV|H1|BB20_25|SIN|SL2|TRAIL3|BE1|P0|CORTE", "P: REV|H1|RSI2|COMP|SL2|OBJ3|BE1|P0|CORTE", "P: REV|H1|RSI2|SIN|SL2|OBJ3|BE1|P0|CORTE", "P: REV|H1|RSI2|SIN|SL2|OBJ3|BE0|P0|CORTE", "P: REV|H1|RSI2|SIN|SL2|OBJ3|BE1|P0|CORTE", "P: REV|H1|RSI2|SIN|SL2|OBJ3|BE0|P0|CORTE", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|CORTE", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE1|P0|CORTE", "LATIDO: REV|H1|BB20_25|COMP|SL2|TRAIL2|BE0|P0|CORTE", "LATIDO: REV|H1|RSI14|COMP|SL2|TRAIL3|BE1|P0|CORTE", "LATIDO: REV|H1|RSI14|SIN|SL2|TRAIL2|BE1|P1|V12", "P: REV|H1|BB20_25|COMP|SL2|TRAIL2|BE0|P0|CORTE", "PAUSA: PAUSA (sin operar)", "REANUDA: REV|H1|BB20_25|COMP|SL2|TRAIL2|BE0|P0|CORTE", "PAUSA: PAUSA (sin operar)", "P: REV|H1|RSI14|SIN|SL2|TRAIL3|BE0|P1|CORTE", "P: REV|H1|RSI14|SIN|SL2|TRAIL2|BE0|P1|CORTE", "P: REV|H1|RSI14|COMP|SL1|OBJ3|BE0|P0|CORTE", "P: REV|H1|RSI14|COMP|SL1|OBJ3|BE1|P0|CORTE", "P: REV|H1|RSI14|COMP|SL1|OBJ3|BE0|P0|CORTE", "PAUSA: PAUSA (sin operar)", "LATIDO: REV|M15|BB20_25|COMP|SL2|OBJ3|BE0|P0|CORTE", "P: REV|M15|BB20_2|COMP|SL2|OBJ3|BE0|P0|CORTE", "P: REV|M15|RSI14|COMP|SL2|OBJ3|BE0|P0|CORTE", "LATIDO: REV|H1|BB20_25|COMP|SL1|TRAIL3|BE0|P0|CORTE", "P: REV|H1|BB20_25|COMP|SL2|TRAIL3|BE0|P0|CORTE", "LATIDO: REV|M15|RSI14|COMP|SL2|TRAIL3|BE1|P0|CORTE", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE1|P0|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE0|P1|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE0|P1|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE1|P0|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|BB20_2|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|BB20_25|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|BB20_25|COMP|SL2|TRAIL3|BE0|P1|V12", "P: REV|H1|BB20_25|SIN|SL2|TRAIL3|BE0|P1|V12", "LATIDO: REV|H1|BB20_25|SIN|SL2|OBJ3|BE1|P0|CORTE", "LATIDO: REV|H1|BB20_25|COMP|SL2|OBJ3|BE1|P0|CORTE", "LATIDO: REV|H1|BB20_25|SIN|SL2|OBJ3|BE1|P0|CORTE", "LATIDO: REV|H1|BB20_25|COMP|SL2|OBJ3|BE1|P0|CORTE", "LATIDO: REV|H1|BB20_25|COMP|SL2|OBJ3|BE0|P0|CORTE", "LATIDO: REV|H1|BB20_25|SIN|SL2|OBJ3|BE1|P0|CORTE", "LATIDO: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE1|P0|CORTE", "LATIDO: REV|H1|BB20_25|SIN|SL2|TRAIL2|BE1|P1|V12", "LATIDO: REV|H1|BB20_25|SIN|SL2|TRAIL2|BE1|P0|V12", "LATIDO: REV|H1|BB20_2|COMP|SL2|OBJ3|BE0|P0|V12", "LATIDO: REV|H1|BB20_2|SIN|SL2|TRAIL3|BE0|P1|V12", "LATIDO: REV|H1|BB20_2|SIN|SL1|OBJ3|BE1|P0|V12", "PAUSA: PAUSA (sin operar)", "P: REV|M15|RSI2|SIN|SL1|TRAIL2|BE0|P0|V12", "P: REV|M15|BB20_2|SIN|SL1|OBJ3|BE0|P0|CORTE", "P: REV|M15|BB20_2|SIN|SL2|OBJ3|BE0|P0|CORTE", "P: REV|H1|BB20_2|SIN|SL2|OBJ3|BE0|P0|CORTE", "D: REV|H1|BB20_25|SIN|SL2|OBJ3|BE0|P0|CORTE", "P: REV|H1|BB20_25|COMP|SL2|OBJ3|BE0|P0|CORTE", "P: REV|H1|BB20_25|COMP|SL1|OBJ3|BE0|P0|CORTE", "P: REV|H1|BB20_25|COMP|SL2|OBJ3|BE0|P0|CORTE", "P: REV|H1|BB20_25|COMP|SL2|TRAIL2|BE0|P0|CORTE", "LATIDO: REV|H1|BB20_25|COMP|SL2|OBJ3|BE0|P0|CORTE", "P: REV|H1|BB20_25|COMP|SL2|TRAIL2|BE1|P1|V12", "P: REV|M15|RSI14|COMP|SL1|TRAIL3|BE1|P0|V12", "P: REV|M15|RSI14|COMP|SL2|TRAIL3|BE1|P0|V12", "P: REV|M15|RSI14|COMP|SL1|TRAIL3|BE1|P0|V12", "P: REV|M15|RSI14|COMP|SL1|TRAIL3|BE1|P0|CORTE", "I: REV|H1|RSI14|COMP|SL2|TRAIL3|BE1|P0|V12", "LATIDO: REV|H1|RSI2|COMP|SL2|TRAIL3|BE0|P0|CORTE", "D: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|CORTE", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "LATIDO: REV|H1|BB20_25|COMP|SL2|TRAIL3|BE0|P0|V12", "LATIDO: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|RSI2|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|CORTE", "I: REV|H1|RSI14|COMP|SL2|TRAIL3|BE1|P0|CORTE", "P: REV|H1|RSI2|COMP|SL2|TRAIL3|BE1|P0|CORTE", "P: REV|H1|RSI2|COMP|SL2|TRAIL3|BE0|P0|CORTE", "I: REV|H1|RSI2|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|RSI2|COMP|SL2|TRAIL3|BE0|P0|CORTE", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|CORTE", "LATIDO: REV|H1|RSI14|COMP|SL2|OBJ3|BE0|P0|CORTE", "LATIDO: REV|H1|RSI14|COMP|SL2|OBJ3|BE0|P0|V12", "LATIDO: REV|H1|RSI2|COMP|SL2|TRAIL3|BE0|P0|CORTE", "P: REV|H1|RSI2|COMP|SL2|TRAIL3|BE0|P0|V12", "P: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|V12", "LATIDO: REV|H1|RSI14|COMP|SL2|OBJ3|BE0|P0|CORTE", "LATIDO: REV|H1|RSI14|COMP|SL2|TRAIL3|BE0|P0|CORTE", "LATIDO: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE0|P0|CORTE", "I: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE0|P1|CORTE", "P: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE0|P1|V12", "P: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE0|P0|V12", "I: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE0|P1|V12", "P: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE0|P1|CORTE", "P: REV|M15|BB20_25|SIN|SL2|TRAIL3|BE0|P0|CORTE", "P: REV|H1|RSI2|COMP|SL2|TRAIL2|BE1|P0|V12", "P: REV|H1|RSI2|SIN|SL2|TRAIL2|BE1|P0|V12", "P: REV|H1|RSI2|SIN|SL2|TRAIL2|BE1|P1|V12", "P: REV|H1|RSI2|SIN|SL2|TRAIL2|BE0|P1|V12", "P: REV|H1|RSI2|SIN|SL2|TRAIL2|BE1|P1|V12")
+var int[] E_FAM = array.from(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2)
+var int[] E_TF = array.from(15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 15, 15, 15, 15, 15, 15, 15, 15, 60, 60, 60, 60, 60, 60, 60, 60, 15, 15, 15, 15, 15, 15, 15, 15, 60, 60, 60, 60, 60, 60, 60, 60)
+var int[] E_N = array.from(12, 12, 12, 12, 12, 12, 24, 24, 24, 24, 24, 24, 48, 48, 48, 48, 48, 48, 12, 12, 12, 12, 12, 12, 24, 24, 24, 24, 24, 24, 48, 48, 48, 48, 48, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+var int[] E_CM = array.from(80, 80, 100, 100, 9900, 9900, 80, 80, 100, 100, 9900, 9900, 80, 80, 100, 100, 9900, 9900, 80, 80, 100, 100, 9900, 9900, 80, 80, 100, 100, 9900, 9900, 80, 80, 100, 100, 9900, 9900, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+var int[] E_VENT = array.from(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+var int[] E_SEN = array.from(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3, 0, 0, 1, 1, 2, 2, 3, 3)
+var int[] E_FILT = array.from(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1)
+var int[] X_SL10 = array.from(10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20)
+var int[] X_MODO = array.from(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2)
+var int[] X_BE = array.from(0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1)
+var int[] X_PAR = array.from(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1)
+var int[] X_TI = array.from(0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1)
+
+// ---------------------------------------------------------------- indicadores (M15 del gráfico y H1 vía request.security, solo velas cerradas)
+f_sig() =>
+    tr = ta.tr(true)
+    a14 = ta.rma(tr, 14)
+    a96 = ta.rma(tr, 96)
+    e10 = ta.ema(close, 10), e20 = ta.ema(close, 20), e40 = ta.ema(close, 40), e50 = ta.ema(close, 50), e80 = ta.ema(close, 80), e200 = ta.ema(close, 200)
+    m = ta.ema(close, 12) - ta.ema(close, 26)
+    ms = ta.ema(m, 9)
+    r2 = ta.rsi(close, 2)
+    r14 = ta.rsi(close, 14)
+    bm = ta.sma(close, 20)
+    bs = ta.stdev(close, 20)
+    t0 = ta.crossover(e10, e40) ? 1 : ta.crossunder(e10, e40) ? -1 : 0
+    t1 = ta.crossover(e20, e80) ? 1 : ta.crossunder(e20, e80) ? -1 : 0
+    t2 = ta.crossover(e50, e200) ? 1 : ta.crossunder(e50, e200) ? -1 : 0
+    t3 = ta.crossover(m, ms) ? 1 : ta.crossunder(m, ms) ? -1 : 0
+    v0 = r2 < 10 and r2[1] >= 10 ? 1 : r2 > 90 and r2[1] <= 90 ? -1 : 0
+    v1 = r14 < 30 and r14[1] >= 30 ? 1 : r14 > 70 and r14[1] <= 70 ? -1 : 0
+    lo2 = bm - 2.0 * bs, hi2 = bm + 2.0 * bs, lo25 = bm - 2.5 * bs, hi25 = bm + 2.5 * bs
+    v2 = close < lo2 and close[1] >= lo2[1] ? 1 : close > hi2 and close[1] <= hi2[1] ? -1 : 0
+    v3 = close < lo25 and close[1] >= lo25[1] ? 1 : close > hi25 and close[1] <= hi25[1] ? -1 : 0
+    [t0, t1, t2, t3, v0, v1, v2, v3, a14 / a96, a14, ta.highest(high, 12), ta.lowest(low, 12), ta.highest(high, 24), ta.lowest(low, 24), ta.highest(high, 48), ta.lowest(low, 48)]
+
+[mt0, mt1, mt2, mt3, mv0, mv1, mv2, mv3, mrat, matr, mh12, ml12, mh24, ml24, mh48, ml48] = f_sig()
+[ht0, ht1, ht2, ht3, hv0, hv1, hv2, hv3, hrat, hatr, hh12, hl12, hh24, hl24, hh48, hl48] = request.security(syminfo.tickerid, "60", f_sig(), lookahead = barmerge.lookahead_off)
+
+// ---------------------------------------------------------------- configuración vigente según el calendario embebido
+var int ptr = -1
+nyH = hour(time_close, "America/New_York")
+nyM = minute(time_close, "America/New_York")
+mdia = nyH * 60 + nyM
+while ptr + 1 < array.size(RT) and time_close >= array.get(RT, ptr + 1)
+    ptr += 1
+    c = array.get(RC, ptr)
+    col = array.get(RM, ptr) == 5 ? color.black : array.get(RM, ptr) == 1 ? color.red : array.get(RM, ptr) == 2 ? color.orange : array.get(RM, ptr) == 3 ? color.purple : color.green
+    line.new(bar_index, low, bar_index, high, extend = extend.both, color = color.new(col, 60), width = 1)
+    label.new(bar_index, high, array.get(RS, ptr), style = label.style_label_down, color = color.new(col, 20), textcolor = color.white, size = size.tiny)
+conf = ptr >= 0 ? array.get(RC, ptr) : -1
+activa = conf >= 0
+e = activa ? int(conf / 40) : 0
+x = activa ? conf % 40 : 0
+fam = array.get(E_FAM, e)
+tfc = array.get(E_TF, e)
+esH1 = tfc == 60
+cierreTF = esH1 ? (time_close % 3600000 == 0) : true
+sigT = esH1 ? (array.get(E_SEN, e) == 0 ? ht0 : array.get(E_SEN, e) == 1 ? ht1 : array.get(E_SEN, e) == 2 ? ht2 : ht3) : (array.get(E_SEN, e) == 0 ? mt0 : array.get(E_SEN, e) == 1 ? mt1 : array.get(E_SEN, e) == 2 ? mt2 : mt3)
+sigV = esH1 ? (array.get(E_SEN, e) == 0 ? hv0 : array.get(E_SEN, e) == 1 ? hv1 : array.get(E_SEN, e) == 2 ? hv2 : hv3) : (array.get(E_SEN, e) == 0 ? mv0 : array.get(E_SEN, e) == 1 ? mv1 : array.get(E_SEN, e) == 2 ? mv2 : mv3)
+rat = esH1 ? hrat : mrat
+atr = esH1 ? hatr : matr
+N = array.get(E_N, e)
+dh = esH1 ? (N == 12 ? hh12 : N == 24 ? hh24 : hh48) : (N == 12 ? mh12 : N == 24 ? mh24 : mh48)
+dl = esH1 ? (N == 12 ? hl12 : N == 24 ? hl24 : hl48) : (N == 12 ? ml12 : N == 24 ? ml24 : ml48)
+ventTodo = mdia >= 1080 or mdia <= 840
+ventLdn = mdia >= 120 and mdia <= 660
+entradaOK = mdia >= 1080 or mdia <= 900
+filtOK = fam == 0 ? (array.get(E_CM, e) >= 9900 or rat <= array.get(E_CM, e) / 100.0) : fam == 1 ? (array.get(E_FILT, e) == 0 or rat >= 1.0) : (array.get(E_FILT, e) == 0 or rat <= 1.0)
+
+// ---------------------------------------------------------------- entradas
+var int armBar = na
+var float atrE = na
+if activa and cierreTF and strategy.position_size == 0 and entradaOK
+    if fam == 0
+        okv = array.get(E_VENT, e) == 0 ? ventLdn : ventTodo
+        nb = esH1 ? 4 : 1
+        if okv and filtOK and (na(armBar) or bar_index - armBar > 4 * nb)
+            armBar := bar_index
+            atrE := atr
+            strategy.entry("OCO_L", strategy.long, stop = dh + 0.1 * atr, oca_name = "oco", oca_type = strategy.oca.cancel)
+            strategy.entry("OCO_S", strategy.short, stop = dl - 0.1 * atr, oca_name = "oco", oca_type = strategy.oca.cancel)
+    else
+        s = fam == 1 ? sigT : sigV
+        if ventTodo and filtOK and s != 0
+            atrE := atr
+            strategy.entry(s > 0 ? "L" : "S", s > 0 ? strategy.long : strategy.short)
+if not na(armBar) and strategy.position_size == 0 and bar_index - armBar >= 4 * (esH1 ? 4 : 1)
+    strategy.cancel("OCO_L")
+    strategy.cancel("OCO_S")
+
+// ---------------------------------------------------------------- salidas: stop k·ATR, objetivo 3:1 o chandelier, break-even, parcial, tiempo, 16:45 NY
+var float ext = na
+var int barEnt = na
+if strategy.position_size != 0 and strategy.position_size[1] == 0
+    ext := strategy.position_avg_price
+    barEnt := bar_index
+if strategy.position_size != 0
+    pe = strategy.position_avg_price
+    lado = strategy.position_size > 0 ? 1 : -1
+    dist = array.get(X_SL10, x) / 10.0 * atrE
+    modo = array.get(X_MODO, x)
+    ext := lado > 0 ? math.max(ext, high[1]) : math.min(ext, low[1])
+    sl = pe - lado * dist
+    if modo > 0
+        tr = (modo == 1 ? 2.0 : 3.0) * atrE
+        sl := lado > 0 ? math.max(sl, ext - tr) : math.min(sl, ext + tr)
+    if array.get(X_BE, x) == 1 and lado * (ext - pe) >= dist
+        sl := lado > 0 ? math.max(sl, pe) : math.min(sl, pe)
+    tp = modo == 0 ? pe + lado * 3.0 * dist : na
+    if array.get(X_PAR, x) == 1
+        strategy.exit("PARCIAL", qty_percent = 50, limit = pe + lado * 2.0 * dist)
+    strategy.exit("SALIDA", stop = sl, limit = tp)
+    nvel = (bar_index - barEnt) / (esH1 ? 4 : 1)
+    if (array.get(X_TI, x) == 0 and nvel >= 12) or (nyH == 16 and nyM == 45)
+        strategy.close_all(comment = "tiempo")
+if not activa and strategy.position_size == 0
+    strategy.cancel_all()
