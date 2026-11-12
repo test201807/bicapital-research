@@ -1,6 +1,6 @@
 // This Pine Script® code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
 // © hectorldu · BICAPITAL Research · laboratorio L117 (versión B)
-//@version=5
+//@version=6
 // VERSIÓN B 2026-11-11: fechas RT corregidas a milisegundos UTC (la original las truncaba y todo caía en la primera vela).
 // Calendario de recalibraciones embebido (103): fecha UTC → configuración (entrada × salida) y motivo.
 strategy("L117 · Sistema que se recalibra solo (PID, rebote) · EURUSD", overlay = true, pyramiding = 0, initial_capital = 100000, default_qty_type = strategy.percent_of_equity, default_qty_value = 10, commission_type = strategy.commission.percent, commission_value = 0.0025, max_labels_count = 500, max_lines_count = 500, max_bars_back = 500)
