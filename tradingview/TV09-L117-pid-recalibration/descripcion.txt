@@ -10,7 +10,7 @@ Qué verás en el gráfico
 
 Cómo usarlo
 - Gráfico EURUSD en 15 minutos (el script lee también las velas de 1 hora).
-- Ve a los años 2022-2025 para ver el periodo de examen, que el sistema no había usado para aprender.
+- En 15 minutos TradingView carga solo unos meses de historia: verás la última versión elegida por el sistema operando sobre el precio actual. Con la reproducción de barras o con más historia cargada aparecen las etiquetas de cada recalibración de 2018 a 2025.
 
 Resultados del laboratorio (con costes reales)
 - En los 3 años de examen hizo 816 operaciones. Arriesgando 1 % por operación, terminó cerca de +23 %, con una caída de alrededor de un 30 % a finales de 2024.

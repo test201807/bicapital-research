@@ -52,7 +52,9 @@ var int ptr = -1
 nyH = hour(time_close, "America/New_York")
 nyM = minute(time_close, "America/New_York")
 mdia = nyH * 60 + nyM
-while ptr + 1 < array.size(RT) and time_close >= array.get(RT, ptr + 1)
+while ptr + 1 < array.size(RT)
+    if time_close < array.get(RT, ptr + 1)
+        break
     ptr += 1
     c = array.get(RC, ptr)
     col = array.get(RM, ptr) == 5 ? color.black : array.get(RM, ptr) == 1 ? color.red : array.get(RM, ptr) == 2 ? color.orange : array.get(RM, ptr) == 3 ? color.purple : color.green
