@@ -1,0 +1,142 @@
+[
+{
+"id": "HOT_ES",
+"site": "es",
+"symbol": "BINANCE:BTCUSDT",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Trend analysis",
+"Technical indicators"
+],
+"title": "No hay mano caliente: activar una estrategia por su racha falla",
+"body": "Una idea muy extendida: «usa la estrategia mientras está en racha y apágala cuando empiece a perder». Si las rachas existieran, ganar después de ganar sería más probable que ganar después de perder.\n\nLo medí en 1.862 familias de estrategias (herramienta × salida) en 78 activos.\n\nProbabilidad de ganar la siguiente operación:\n- Riesgo/beneficio 1,5: 40,5 % tras una ganadora y 40,2 % tras una perdedora. Diferencia +0,30 puntos; barajando el orden de las operaciones sale exactamente +0,30.\n- Riesgo/beneficio 2: 34,6 % frente a 34,1 %.\n- Riesgo/beneficio 3: 26,7 % frente a 26,2 %.\n\nEncender y apagar por la racha:\n- Tras corregir por pruebas múltiples (Holm), 0 reglas de encendido son positivas.\n- La mejor regla de encendido da −0,105 R por operación, frente a −0,114 R operando siempre y −0,138 R en las fases apagadas: todas negativas.\n- Una cartera walk-forward que elige las 20 mejores en racha da −0,085 R por operación; 0 pasan; p del barajado 0,761.\n- Una «buena época» típica dura 6 operaciones (14,6 días) y después se devuelven 3,20 R.\n\nLa racha que ves es la que ya pasó. Lo que viene después se parece a tirar la moneda otra vez.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "FTMO_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Fundamental analysis",
+"Trend analysis"
+],
+"title": "Reto de fondeo sin ventaja: 93 de 100 pierden la cuota",
+"body": "¿Cuántas veces se aprueba un reto de fondeo (prop firm) solo con buena gestión del riesgo y sin ninguna ventaja real? Lo simulé con las reglas del reto de FTMO: objetivo de beneficio, pérdida máxima diaria y pérdida máxima total, en dos fases.\n\nEl experimento\n- 324 políticas de riesgo distintas (tamaño por operación, stop, objetivo, cuándo parar).\n- 100.000 caminos por política, con operaciones de resultado aleatorio: ganar o perder no depende de nada.\n\nResultado\n- Sin costes, el techo está cerca del 33 %: la mejor política aprueba el 33,5 % de las veces y llega a cobrar el 27,8 %.\n- Con los costes reales de operar CFD en el reto (0,13 R por operación), la mejor política aprueba el 19,1 % y cobra el 6,7 %. Dicho de otro modo: 93 de cada 100 intentos pierden la cuota.\n- Los costes pesan más que cualquier ajuste del riesgo: con 0,05 R se aprueba el 24,7 % y se cobra el 14,0 %; con 0,20 R, el 15,6 % y el 5,4 %.\n\nLo que enseña: la gestión del riesgo decide cómo pierdes, no si ganas. Aprobar sin ventaja es posible, pero es una lotería con la casa a favor. Antes de pagar un reto, la pregunta es si tu método gana algo después de costes en datos que no usaste para diseñarlo.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "LEVELS_ES",
+"site": "es",
+"symbol": "SP:SPX",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"title": "Máximos y mínimos previos no frenan el precio: 10 M de toques",
+"body": "«El precio rebota en el máximo del mes anterior.» «El mínimo del año pasado es un soporte clave.» ¿Rebota de verdad más que en cualquier otro precio?\n\nLo medí en 10.390.045 toques en 125 activos: máximos y mínimos de la sesión, el día, la semana, el mes, el trimestre y el año anteriores. Para cada toque comparé el rechazo real con un nivel placebo (un precio cualquiera a la misma distancia).\n\nRechazo en el primer toque, real frente a placebo:\n- Sesión anterior: 51,2 % frente a 50,7 %\n- Día anterior: 48,2 % frente a 49,1 %\n- Semana anterior: 46,3 % frente a 48,8 %\n- Mes anterior: 45,0 % frente a 50,3 %\n- Trimestre anterior: 44,2 % frente a 50,6 %\n- Año anterior: 42,3 % frente a 50,7 %\n\nCuanto más «grande» es el nivel, menos frena: los niveles mensuales, trimestrales y anuales se rompen más que un precio cualquiera. Frente a un paseo aleatorio las diferencias no son significativas, y de 60 reglas de operación ninguna pasó (reality check p = 1,000).\n\nLo que enseña: un nivel famoso atrae miradas, no órdenes que lo defiendan. Si quieres usarlo, compáralo antes con un nivel inventado.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "ALTS_ES",
+"site": "es",
+"symbol": "CRYPTOCAP:TOTAL3",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Fundamental analysis",
+"Trend analysis"
+],
+"title": "El mito de las altcoins: suben menos que BTC y caen más",
+"body": "La idea popular: «las alts son BTC con apalancamiento: cuando BTC sube, ellas suben más». Lo medí en 382 altcoins, usando solo las que existían en cada fecha (sin sesgo de supervivencia).\n\nBeta frente a BTC, separando días de subida y de bajada (todos los regímenes):\n- Cuando BTC sube: beta 0,745. La alt típica sube tres cuartas partes de lo que sube BTC.\n- Cuando BTC baja: beta 1,320. La alt típica cae un tercio más que BTC.\n- Solo el 10,2 % de las alts tiene beta de subida mayor que 1.\n\nPor régimen de mercado, la asimetría se mantiene: deprimido 0,879 / 1,241; expansión 0,784 / 1,437; euforia 0,315 / 0,825.\n\nY en la recuperación temprana, cuando más se dice que «llega la temporada de alts», el exceso medio frente a BTC a 90 días fue −23,06 %, y solo el 24,5 % de las alts batió a BTC.\n\nLo que enseña: el apalancamiento de las alts es asimétrico, más a la baja que al alza. Comprar alts para ganarle a BTC exige una razón concreta para cada moneda, no la esperanza de que el grupo se dispare.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "RULE_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"title": "Mi regla de trading resultó igual que el azar",
+"body": "Tenía una regla de entrada que me gustaba: stop a 3 ATR y objetivo a 1R. La puse a prueba en serio antes de seguir usándola.\n\nLa prueba\n- 108 activos (divisas, índices, metales, materias primas), 2016 a 2026.\n- 146.167 operaciones por combinación, con costes reales.\n- La misma regla con entradas al azar, para saber cuánto daría lanzar una moneda.\n\nResultado\n- Mi regla: −0,175 R por operación (−7,2 puntos básicos; t = −25,4).\n- Entradas al azar con el mismo stop y objetivo: −0,180 R.\n- Solo 6 de los 108 activos salen positivos, y por muy poco (el mejor, GER40, +0,034 R).\n\nMi regla no era mala: era azar con costes. La diferencia con lanzar una moneda es de 0,005 R por operación.\n\nLa prueba que recomiendo hacer con cualquier regla: compárala con la misma gestión y entradas aleatorias. Si no gana a eso con claridad, la entrada no aporta nada.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "STOP_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"title": "Mover el stop o el objetivo no crea ventaja: 12 combinaciones",
+"body": "Cuando una estrategia pierde, lo primero que se toca es el stop y el objetivo: «más ajustado», «más amplio», «déjala correr». ¿Cambia algo?\n\nProbé 12 combinaciones de stop y objetivo sobre la misma entrada, en 108 activos y dos épocas (2000-2015 y 2016-2026), con costes reales.\n\nResultado\n- Las 12 combinaciones pierden en las dos épocas.\n- Todas cuestan unos 7 puntos básicos por operación, sea cual sea la combinación.\n- Stop 1 ATR / objetivo 1R: −0,514 R. Stop 1,5 ATR / 2R: −0,347 R. Stop 2 ATR / 3R: −0,264 R.\n- Antes de costes, todas quedan entre −0,004 y −0,038 R: prácticamente cero.\n- Con entradas al azar y la misma gestión, el resultado es casi idéntico.\n\nPor qué pasa: cambiar el stop y el objetivo solo reparte la misma ventaja (cero) en más o menos operaciones ganadoras. Sube el porcentaje de acierto o sube el tamaño de la ganancia, pero no las dos cosas. Lo único que cambia de verdad es cuánto pagas en costes.\n\nSi la entrada no tiene ventaja, ninguna gestión de la salida se la va a dar.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "SWAP_ES",
+"site": "es",
+"symbol": "NASDAQ:NDX",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Fundamental analysis",
+"Beyond technical analysis",
+"Trend analysis"
+],
+"title": "Dejar índices abiertos de noche: el swap se come la ganancia",
+"body": "Una observación conocida: buena parte de la subida de los índices de EE. UU. ocurre fuera de la sesión, de noche. ¿Se puede aprovechar con CFD dejando la posición abierta?\n\nLo medí de septiembre de 2021 a julio de 2026 con el coste real de mantener la posición de un día para otro (swap) en una cuenta de CFD.\n\nNasdaq 100 (US100), comprado fuera de sesión:\n- Rendimiento bruto: +6,68 % al año (t = 1,06, no significativo).\n- Swap largo: −11,50 % al año.\n- Neto: −4,82 % al año.\n\nDow Jones (US30): +4,68 % bruto, −9,90 % de swap, −5,22 % neto.\n\nEl swap del US100 cuesta unos 3,2 puntos básicos por noche: en cuatro noches ya es 20 veces el spread de abrir y cerrar.\n\nLo que enseña: un efecto que aparece en los datos brutos puede no existir para el instrumento con el que lo operas. Con CFD, mantener de noche se paga cada día, y en índices ese coste se come todo el efecto. Antes de operar una anomalía, mírala con los costes de tu instrumento.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "COSTS_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Fundamental analysis",
+"Beyond technical analysis",
+"Technical indicators"
+],
+"title": "Cuánto cuesta operar de verdad: FTMO, IBKR, futuros y Binance",
+"body": "Una estrategia puede ganar o perder según dónde la operes. Comparé el coste real de abrir y cerrar una operación (ida y vuelta, en puntos básicos) en distintos vehículos.\n\nDivisas\n- Cuenta de fondeo FTMO (CFD): 1,7 pb\n- Broker ECN o IBKR: 1,9 pb\n\nÍndices\n- FTMO (CFD): 2,1 pb\n- Micro futuros: 1,5 pb\n- FTMO Futuros (mediana): 3,7 pb\n\nAcciones\n- FTMO (CFD): 14,5 pb\n- IBKR: 2,0 pb\n\nCripto\n- FTMO (CFD): 18 pb\n- Binance con orden a mercado (taker): 13 pb\n- Binance con orden límite (maker): 4 pb\n- Solo el deslizamiento por lado en Binance: 6,5 pb en las 20 mayores monedas y 8,1 pb en las 50 mayores.\n\nLo que enseña\n- En divisas e índices los costes se parecen; en acciones y cripto la diferencia es enorme: operar acciones por CFD cuesta unas 7 veces más que en IBKR.\n- Una estrategia que gana 10 pb por operación es rentable en un sitio y perdedora en otro.\n- Usar órdenes límite en cripto puede reducir el coste a menos de un tercio.\n\nAntes de juzgar una estrategia, ponle el coste del vehículo donde la vas a operar.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "SPREAD_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "15",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"title": "El spread de la 01:00: +0,21 R en el backtest, −0,23 R en real",
+"body": "Un patrón en divisas parecía muy sólido: entrar a la 01:00 (hora del servidor, apertura de Asia) daba +0,209 R por operación en el backtest, con t = 29,2.\n\nLo comprobé con ticks reales (bid y ask) de 18 pares, de enero de 2025 a septiembre de 2026: 8.063 días-par.\n\nResultado\n- Backtest con precio bid: +0,209 R por operación.\n- Con el precio medio entre bid y ask: +0,019 R.\n- Entrando de verdad a la 01:00, pagando el ask: −0,228 R (t = −32).\n- El spread a esa hora cuesta 0,418 R: unas 3 veces el spread medio de esa misma hora.\n- Retrasando la entrada a 01:05-01:30, el resultado sigue negativo: de −0,058 a −0,069 R.\n\nEl «patrón» era el spread. A la 01:00 la liquidez desaparece, el spread se dispara, y un backtest que usa solo el precio bid ve un movimiento que no se puede capturar.\n\nCómo evitarlo: prueba con bid y ask reales, sobre todo en cambios de sesión, en noticias y en horas de poca liquidez. Un t de 29 en un backtest debería hacer sospechar, no celebrar.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "AI_ES",
+"site": "es",
+"symbol": "BINANCE:BTCUSDT",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"title": "IA para predecir la dirección: brilla al entrenar, falla al probar",
+"body": "Entrené varios modelos de aprendizaje automático para predecir la dirección del precio: árboles, redes de secuencia y un modelo de series temporales preentrenado.\n\nLo que pasó\n- En los datos de entrenamiento, la señal era espectacular: t ≈ 10.\n- En datos que el modelo no había visto, se dio la vuelta: t de −0,8 y −2,2.\n- Las redes de secuencia acertaban la dirección con una correlación de 0,01 a 0,04 con el resultado real. El mejor modelo, después de costes, perdía 1,1 puntos básicos por operación.\n\nLo que sí funcionó: predecir la magnitud del movimiento (cuánto se va a mover el precio, no hacia dónde). La volatilidad tiene memoria; la dirección casi no.\n\nPor qué engaña: un modelo con muchos parámetros aprende el ruido del pasado tan bien como la señal. En el entrenamiento todo parece ventaja; fuera de él, queda el ruido.\n\nLa regla que aplico ahora: ningún resultado cuenta si no se ha visto en datos separados antes de mirar, con costes. Y si un modelo predice bien la volatilidad, úsalo para el tamaño de la posición, no para la dirección.\n\nContenido educativo. No es asesoría de inversión."
+}
+]
