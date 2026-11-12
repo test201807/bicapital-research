@@ -1,0 +1,172 @@
+[
+{
+"id": "L117_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "15",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "Un sistema que se ajusta solo\n3 años de examen en EURUSD",
+"studies": [],
+"title": "Un sistema que se recalibra solo: 3 años de examen en EURUSD",
+"body": "Cuando una estrategia deja de funcionar, casi todos hacemos lo mismo: la ajustamos. ¿Puede una máquina hacer ese ajuste sola?\n\nEso probé en EURUSD. Construí 2.720 versiones de estrategias de tres tipos:\n- Ruptura: entrar cuando el precio sale de un rango.\n- Tendencia: seguir la dirección cuando dos medias móviles se cruzan.\n- Rebote: comprar tras una caída fuerte y vender tras una subida fuerte.\n\nEncima puse varios «pilotos» que deciden cuándo cambiar de versión:\n- Un control PID, la misma idea que el termostato de casa o el control de crucero de un coche: si el resultado se aleja de lo esperado, corrige.\n- Inteligencia artificial (árboles de decisión y una red neuronal).\n- Lógica difusa: reglas tipo «si va un poco mal, ajusta un poco».\n\nCómo lo medí\n- Aprendieron con datos de 2018 a 2022 y se examinaron con los 3 años siguientes, que no habían visto.\n- Con los costes reales de una cuenta.\n- Con «grupo de control»: repetí todo en 100 mercados inventados que se mueven igual de fuerte pero sin dirección.\n\nLo que salió\nEl mejor fue el más simple: el control PID con las estrategias de rebote. En 3 años hizo 816 operaciones y, arriesgando 1 % por operación, terminó cerca de +23 %, con una caída de un 30 % por el camino a finales de 2024. En los mercados inventados, el mismo proceso perdía.\n\nAhora, con calma: probé muchas variantes, y entre tantas alguna puede brillar por suerte. Además, casi todo el avance llegó en 2025. Por eso lo considero prometedor, todavía no confirmado. La inteligencia artificial y la lógica difusa no mejoraron al PID clásico: aquí, lo simple ganó.\n\nEl script de este gráfico («L117 · PID clásico · rebote», autor hectorldu) muestra cada operación y cada recalibración con su motivo. La siguiente ronda, en todos los mercados y cinco temporalidades, sale hacia el 18 de noviembre.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "HOT_ES",
+"site": "es",
+"symbol": "BINANCE:BTCUSDT",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Trend analysis",
+"Technical indicators"
+],
+"label": "¿Existe la racha caliente?\n1.862 estrategias lo responden",
+"studies": [
+"Moving Average Exponential"
+],
+"title": "¿Existe la «racha caliente» en el trading? Lo medí",
+"body": "Seguro te ha pasado: encadenas varias operaciones ganadoras y sientes que estás «en racha». Muchos traders usan esa idea para decidir: «mientras gane, sigo; cuando empiece a perder, paro».\n\nQuise ver si las rachas ayudan a predecir la siguiente operación. Lo medí en 1.862 estrategias distintas, en 78 mercados.\n\nLo que encontré\n- Después de una operación ganadora, la siguiente ganó el 40,5 % de las veces.\n- Después de una perdedora, la siguiente ganó el 40,2 %.\nPrácticamente igual. Si mezclas al azar el orden de las operaciones, sale la misma diferencia.\n\nTambién probé la regla «enciende la estrategia cuando va bien y apágala cuando va mal». No mejoró el resultado: las «buenas épocas» duraban de media unas 6 operaciones, y después se devolvía lo ganado.\n\nQué me llevo\n- Una buena racha no significa que vengan más ganancias, y una mala racha tampoco significa que vengan más pérdidas.\n- Lo que sí ayuda es mirar el conjunto: cientos de operaciones y el resultado después de costes.\n- Esto también quita presión: no hace falta castigarse por tres pérdidas seguidas ni confiarse por tres ganancias.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "FTMO_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Fundamental analysis",
+"Trend analysis"
+],
+"label": "Retos de fondeo\n32 millones de simulaciones",
+"studies": [
+"Moving Average Exponential"
+],
+"title": "Retos de fondeo: lo que enseñan 32 millones de simulaciones",
+"body": "Las empresas de fondeo (prop firms) te dan una cuenta si superas un examen: ganar un porcentaje sin perder más de un límite diario ni de un límite total.\n\nPregunta: ¿cuánto ayuda la buena gestión del riesgo si las operaciones, en el fondo, son 50-50? Lo simulé con las reglas del reto de FTMO: 324 formas distintas de gestionar el riesgo y 100.000 intentos de cada una. En total, más de 32 millones de retos simulados.\n\nLo que encontré\n- Sin costes, la mejor gestión aprobaba cerca de 1 de cada 3 intentos.\n- Con los costes reales de operar (spread y comisión), la mejor aprobaba unos 19 de cada 100, y llegaba a cobrar unos 7 de cada 100.\n- Los costes pesaban más que cualquier ajuste: con costes más bajos, cobraban 14 de cada 100.\n\nQué me llevo\n- La gestión del riesgo es muy valiosa: decide cuánto pierdes cuando las cosas van mal.\n- Para cobrar con regularidad hace falta, además, algo que gane un poco más de lo que cuesta operar.\n- Antes de pagar un reto, vale la pena probar tu método con costes reales en datos que no usaste para diseñarlo, y elegir los mercados más baratos de operar.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "LEVELS_ES",
+"site": "es",
+"symbol": "SP:SPX",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "¿El máximo del mes pasado\nfrena el precio?",
+"studies": [],
+"title": "¿El máximo del mes pasado frena el precio? 10 millones de toques",
+"body": "Es una de las ideas más repetidas: «el precio rebota en el máximo (o mínimo) del día, la semana o el mes anterior».\n\nLo comprobé con más de 10 millones de toques en 125 mercados. Para saber si esos niveles son especiales, comparé cada toque con un nivel cualquiera a la misma distancia del precio, un nivel «de mentira».\n\nCuántas veces el precio rebotó en el primer toque\n- Máximo o mínimo del día anterior: 48 de cada 100 (nivel de mentira: 49)\n- De la semana anterior: 46 (de mentira: 49)\n- Del mes anterior: 45 (de mentira: 50)\n- Del año anterior: 42 (de mentira: 51)\n\nLos niveles grandes no frenaron más que un precio cualquiera; de hecho, se rompieron un poco más.\n\nQué me llevo\n- Estos niveles siguen siendo útiles para orientarse: mucha gente los mira y ahí suele haber movimiento.\n- Pero conviene tratarlos como zonas de atención, no como muros que el precio respeta.\n- Una prueba sencilla para cualquier nivel: compáralo con uno inventado. Si no se comporta distinto, no le des más peso del que tiene.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "ALTS_ES",
+"site": "es",
+"symbol": "CRYPTOCAP:TOTAL3/BINANCE:BTCUSDT",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Fundamental analysis",
+"Trend analysis"
+],
+"label": "Altcoins frente a BTC\n(la línea baja = las alts lo hacen peor)",
+"studies": [],
+"title": "Altcoins frente a Bitcoin: suben menos y caen más, en promedio",
+"body": "Se dice mucho que las altcoins son «Bitcoin con turbo»: cuando BTC sube, ellas suben más. Lo medí en 382 altcoins, contando también las que ya desaparecieron, para no quedarme solo con las ganadoras.\n\nEn promedio:\n- Cuando BTC sube un 10 %, la altcoin típica sube un 7,5 %.\n- Cuando BTC cae un 10 %, la altcoin típica cae un 13 %.\n\nEs decir, el «turbo» funciona más hacia abajo que hacia arriba. El gráfico muestra el conjunto de las altcoins dividido entre BTC: cuando la línea baja, las alts lo están haciendo peor que Bitcoin.\n\nIncluso al inicio de las recuperaciones, cuando más se habla de «temporada de altcoins», solo 1 de cada 4 altcoins le ganó a BTC en los 90 días siguientes.\n\nQué me llevo\n- Sí hay altcoins que lo hacen mejor que Bitcoin: alrededor de 1 de cada 10 sube más que BTC cuando el mercado sube.\n- La clave es elegirlas con razones concretas (uso, ingresos, oferta de tokens), no esperar que todo el grupo se dispare.\n- Si inviertes en altcoins, ayuda pensar en cuánto pueden caer, no solo en cuánto pueden subir.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "RULE_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "Mi regla frente a\nlanzar una moneda",
+"studies": [
+"Average True Range"
+],
+"title": "Probé mi regla de trading contra lanzar una moneda",
+"body": "Tenía una regla de trading que me gustaba: stop a 3 veces el rango medio de las velas (ATR) y objetivo igual a lo que arriesgaba. Antes de seguir usándola, hice una prueba que recomiendo a todo el mundo: compararla con entradas al azar, como lanzar una moneda, usando la misma gestión de salida.\n\nLa prueba\n- 108 mercados (divisas, índices, metales, materias primas), de 2016 a 2026.\n- Miles de operaciones, con los costes reales de operar.\n\nLo que salió\n- Con costes, mi regla y la moneda terminaban prácticamente en el mismo sitio: las dos perdían, y casi lo mismo.\n- Antes de costes, ambas estaban cerca de cero.\n- Solo 6 de los 108 mercados salían positivos, y por muy poco.\n\nQué me llevo\n- Mi entrada no aportaba información: el resultado lo decidían los costes.\n- Esta prueba me ahorró meses (y dinero) operando algo que no tenía ventaja.\n- Es fácil de hacer con cualquier regla: si no le gana con claridad a la moneda, toca seguir buscando.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "SWAP_ES",
+"site": "es",
+"symbol": "NASDAQ:NDX",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Fundamental analysis",
+"Beyond technical analysis",
+"Trend analysis"
+],
+"label": "Nasdaq de noche con CFD:\n+6,7 % de subida, −11,5 % de swap",
+"studies": [
+"Moving Average Exponential"
+],
+"title": "El coste oculto de dejar el Nasdaq abierto de noche con CFD",
+"body": "Dato curioso: buena parte de la subida de los índices de EE. UU. ocurre fuera del horario de la bolsa, de noche. Parece una oportunidad: comprar al cierre y vender a la apertura.\n\nLo medí de 2021 a 2026 en el Nasdaq 100 operado con CFD, el instrumento que usan muchas cuentas de fondeo y brokers.\n\nLo que salió\n- Lo que subió el índice de noche: cerca de +6,7 % al año.\n- Lo que cobra el broker por mantener la posición de un día para otro (el «swap»): cerca de −11,5 % al año.\n- Resultado: cerca de −4,8 % al año.\nEn el Dow Jones pasó lo mismo: +4,7 % de subida, −9,9 % de swap.\n\nQué me llevo\n- Un efecto que se ve en los datos no siempre se puede aprovechar: depende de cuánto cuesta el instrumento con el que lo operas.\n- Con CFD, mantener posiciones de noche tiene un coste diario que suma mucho con el tiempo.\n- Antes de operar una idea, revisa el swap de tu broker y compáralo con lo que esperas ganar.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "COSTS_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Fundamental analysis",
+"Beyond technical analysis",
+"Technical indicators"
+],
+"label": "¿Cuánto cuesta operar?\nFTMO · IBKR · futuros · Binance",
+"studies": [],
+"title": "¿Cuánto cuesta operar? FTMO, IBKR, futuros y Binance",
+"body": "Una misma estrategia puede ganar en un sitio y perder en otro solo por los costes. Comparé lo que cuesta abrir y cerrar una operación en distintos lugares. Lo expreso en «puntos básicos»: 1 punto básico es el 0,01 % de lo que operas (en 10.000 dólares, 1 dólar).\n\nDivisas\n- Cuenta de fondeo FTMO: 1,7\n- Broker ECN o Interactive Brokers (IBKR): 1,9\n\nÍndices\n- FTMO (CFD): 2,1\n- Micro futuros: 1,5\n\nAcciones\n- FTMO (CFD): 14,5\n- IBKR: 2,0\n\nCripto\n- FTMO (CFD): 18\n- Binance con orden a mercado: 13\n- Binance con orden límite: 4\n\nQué me llevo\n- En divisas e índices los costes son parecidos en casi todas partes.\n- En acciones y cripto la diferencia es enorme: acciones por CFD cuestan unas 7 veces más que en IBKR.\n- En cripto, usar órdenes límite en lugar de a mercado reduce el coste a menos de un tercio.\n- Antes de decidir si una estrategia funciona, ponle el coste real del sitio donde la vas a operar.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "SPREAD_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "15",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "La trampa de la 01:00\n(el spread se dispara)",
+"studies": [],
+"title": "La trampa de la 01:00: un patrón que en realidad era el spread",
+"body": "El spread es la diferencia entre el precio al que puedes comprar y el precio al que puedes vender. Normalmente es pequeño, pero en algunas horas se dispara.\n\nEn mis pruebas, un patrón en divisas parecía buenísimo: entrar a la 01:00, hora del servidor (cuando abre Asia), daba ganancias muy consistentes en el backtest.\n\nLo comprobé con los precios reales de compra y de venta, tick a tick, en 18 pares de divisas y más de 8.000 días:\n- En el backtest, que solo usaba un precio, ganaba con claridad.\n- Con el precio real de compra, perdía.\n- A esa hora el spread era unas 3 veces el normal, y se comía toda la ganancia.\n- Entrando unos minutos más tarde, seguía sin funcionar.\n\nQué me llevo\n- Si un backtest parece demasiado bueno a una hora concreta, revisa el spread de esa hora.\n- Las horas de poca liquidez (cambio de sesión, madrugada, noticias) son las más engañosas.\n- Probar con precios de compra y venta reales evita muchas sorpresas.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "AI_ES",
+"site": "es",
+"symbol": "BINANCE:BTCUSDT",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "La IA acierta mejor\ncuánto se mueve que hacia dónde",
+"studies": [
+"Historical Volatility"
+],
+"title": "IA para predecir si sube o baja: lo que aprendí",
+"body": "Entrené varios modelos de inteligencia artificial (árboles de decisión, redes neuronales y un modelo de series temporales ya entrenado) para predecir si el precio iba a subir o bajar.\n\nLo que pasó\n- Con los datos con los que aprendieron, los resultados eran espectaculares.\n- Con datos nuevos, que no habían visto, la ventaja desapareció: acertaban la dirección casi como una moneda, y después de costes perdían un poco.\n\nPor qué pasa: un modelo con mucha capacidad aprende de memoria los detalles del pasado, incluido el ruido. Es como un estudiante que se aprende de memoria las respuestas de un examen: le va genial en ese examen y mal en el siguiente.\n\nLo que sí funcionó\nPredecir cuánto se va a mover el precio (la volatilidad), no hacia dónde. Los periodos agitados suelen seguir agitados, y los tranquilos, tranquilos. El indicador de este gráfico muestra esa volatilidad.\n\nQué me llevo\n- Siempre hay que probar los modelos con datos que no usaron para aprender.\n- La IA es útil para decidir el tamaño de la posición según lo agitado que esté el mercado, más que para adivinar la dirección.\n\nContenido educativo. No es asesoría de inversión."
+}
+]
