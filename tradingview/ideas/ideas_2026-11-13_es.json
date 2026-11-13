@@ -1,0 +1,56 @@
+[
+{
+"id": "L50_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "Buscar siempre 3 a 1:\nel objetivo llega 25 de cada 100 veces",
+"studies": [
+"Average True Range"
+],
+"title": "¿Buscar siempre 3 a 1? El objetivo llega 25 de cada 100 veces",
+"body": "En casi todos los cursos se repite la misma regla: «busca operaciones 3 a 1». Es decir, arriesgar 1 para intentar ganar 3. Lo puse a prueba con muchísimos datos.\n\nUna cuenta sencilla primero\nSi el precio se moviera sin ninguna dirección, ¿cuántas veces llegaría antes al objetivo (3 pasos) que al stop (1 paso)? La respuesta es 1 de cada 4, un 25 %. No depende del mercado: sale de la distancia entre stop y objetivo.\n\nLo que probé\n- 285.088 combinaciones de herramienta, mercado y salida, en millones de operaciones con costes reales.\n- Cómo se calcula «el azar»: en el mismo mercado y con el mismo stop y objetivo, en lugar de esperar la señal, entré en momentos elegidos al azar. Así sé qué parte del resultado viene de la señal y qué parte de la geometría.\n\nLo que salió\n- Con señal, el objetivo llegó 24,9 de cada 100 veces.\n- Con entradas al azar, 24,9 de cada 100. Exactamente igual.\n- Con 4 a 1, 19,9 frente al 20 de la cuenta sencilla. Con 5 a 1, 16,6 frente a 16,7.\n- Para cubrir los costes con 3 a 1 harían falta unas 28 de cada 100: faltan unos 3 puntos.\n\nQué me llevo\n- El 3 a 1 cambia cuántas veces ganas, no si ganas: ganas menos veces, pero más cada vez.\n- La ventaja tiene que venir de la entrada, de algo que acierte más que la cuenta sencilla.\n- Mientras tanto, lo que más ayuda es bajar costes.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "L63_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "15",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Fundamental analysis",
+"Technical indicators"
+],
+"label": "Se puede saber cuándo se mueve,\nno hacia dónde",
+"studies": [
+"Historical Volatility"
+],
+"title": "A qué hora se mueve cada mercado (y por qué no dice hacia dónde)",
+"body": "Pregunta práctica: ¿hay horas en las que es mucho más probable que el precio haga un movimiento grande? Lo medí en varios mercados.\n\nQué llamo «movimiento grande»: un recorrido de al menos un 0,5 % (o 10 veces el coste de operar) en cualquier dirección, en las 4 horas siguientes.\n\nLo que encontré (horas de Nueva York, medido con datos que el sistema no había visto)\n- EURUSD: en un momento cualquiera hay movimiento grande unas 6 veces de cada 100. En la mejor franja, los jueves a las 08:15, unas 24 de cada 100: cuatro veces más.\n- GBPUSD: 22 de cada 100 en su mejor franja (viernes 08:15), frente a 7 de media.\n- AUDUSD: 29 de cada 100 (viernes 08:30), frente a 11 de media.\nEsas horas coinciden con la publicación de datos económicos de EE. UU. (08:30).\n\nLa parte importante: la dirección\nSaber que el precio se va a mover no dice si subirá o bajará. Cómo se calcula el azar aquí: adivinar el lado tirando una moneda acierta 50 de cada 100. Mis reglas acertaron entre 53 y 55 de cada 100 en EURUSD, GBPUSD y USDJPY: un poco mejor que la moneda, pero después de costes el resultado seguía en negativo.\n\nQué me llevo\n- Saber cuándo hay movimiento es útil: para estar atento, para ajustar el tamaño de la posición o para no entrar justo antes de una noticia.\n- No sirve, por sí solo, para decidir si comprar o vender.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "L47_ES",
+"site": "es",
+"symbol": "FX:EURUSD",
+"interval": "60",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "«Me saltó el stop y luego fue a mi favor»\ntambién pasa al azar",
+"studies": [
+"Average True Range"
+],
+"title": "«Me saltó el stop y luego fue a mi favor»: también pasa al azar",
+"body": "Es una de las quejas más comunes: el precio toca tu stop y, justo después, se va hacia donde tú pensabas. Parece que «te cazaron». Lo medí para ver cuánto de eso es mala suerte y cuánto es normal.\n\nLa prueba\n- Más de 13 millones de operaciones en gráficos de 1 hora, con stop a 1 ATR y objetivo a 2 ATR. El ATR es el tamaño medio de las velas recientes: una forma de medir cuánto se mueve el precio.\n- Comparé tres cosas: entradas con señal, entradas en momentos al azar y un precio inventado sin ninguna dirección (en cada paso se tira una moneda para decidir si sube o baja, con el mismo tamaño de movimiento que el mercado real).\n\nCuántas veces saltó el stop y después el precio llegó al objetivo\n- Con señal: 44 de cada 100 operaciones.\n- Con entradas al azar: 45 de cada 100.\n- En el precio inventado sin dirección: 45 de cada 100.\nCon un stop más pegado (un cuarto de ATR), pasa unas 61 de cada 100 veces, con señal y al azar.\n\nPor qué pasa\nNo es que alguien vaya a por tu stop. El precio oscila siempre: si el stop está cerca y el objetivo más lejos, lo normal es que toque primero el stop y después siga moviéndose. Es geometría.\n\nQué me llevo\n- Cuando te pase, no es mala suerte ni una trampa: es lo esperable.\n- Un stop demasiado pegado a la volatilidad se toca muchísimo. Ponerlo según el ATR ayuda a entender qué esperar.\n- Lo que decide el resultado es la entrada y los costes, no la «injusticia» de un stop concreto.\n\nContenido educativo. No es asesoría de inversión."
+}
+]
