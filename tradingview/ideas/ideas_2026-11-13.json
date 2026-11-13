@@ -1,0 +1,122 @@
+[
+{
+"id": "AI_ES",
+"site": "es",
+"symbol": "BINANCE:BTCUSDT",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "La IA acierta mejor\ncuánto se mueve que hacia dónde",
+"studies": [
+"Historical Volatility"
+],
+"title": "IA para predecir si sube o baja: lo que aprendí",
+"body": "Entrené varios modelos de inteligencia artificial (árboles de decisión, redes neuronales y un modelo de series temporales ya entrenado) para predecir si el precio iba a subir o bajar.\n\nLo que pasó\n- Con los datos con los que aprendieron, los resultados eran espectaculares.\n- Con datos nuevos, que no habían visto, la ventaja desapareció: acertaban la dirección casi como una moneda, y después de costes perdían un poco.\n\nPor qué pasa: un modelo con mucha capacidad aprende de memoria los detalles del pasado, incluido el ruido. Es como un estudiante que se aprende de memoria las respuestas de un examen: le va genial en ese examen y mal en el siguiente.\n\nLo que sí funcionó\nPredecir cuánto se va a mover el precio (la volatilidad), no hacia dónde. Los periodos agitados suelen seguir agitados, y los tranquilos, tranquilos. El indicador de este gráfico muestra esa volatilidad.\n\nQué me llevo\n- Siempre hay que probar los modelos con datos que no usaron para aprender.\n- La IA es útil para decidir el tamaño de la posición según lo agitado que esté el mercado, más que para adivinar la dirección.\n\nContenido educativo. No es asesoría de inversión."
+},
+{
+"id": "L117_EN",
+"site": "www",
+"symbol": "FX:EURUSD",
+"interval": "15",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "A system that adjusts itself\n3 years of exam on EURUSD",
+"studies": [],
+"title": "A system that recalibrates itself: a 3-year exam on EURUSD",
+"body": "When a strategy stops working, almost everyone does the same thing: they adjust it. Can a machine make that adjustment on its own?\n\nThat is what I tested on EURUSD. I built 2,720 strategy versions of three kinds:\n- Breakout: enter when price leaves a range.\n- Trend: follow the direction when two moving averages cross.\n- Bounce: buy after a sharp fall and sell after a sharp rise.\n\nOn top of them I put several \"pilots\" that decide when to switch versions:\n- PID control, the same idea as a home thermostat or a car's cruise control: if the result drifts away from what was expected, it corrects.\n- Artificial intelligence (decision trees and a neural network).\n- Fuzzy logic: rules like \"if it is going a bit badly, adjust a little\".\n\nHow I measured it\n- They learned on 2018-2022 data and sat their exam on the next 3 years, which they had never seen.\n- With the real costs of an account.\n- With a \"control group\". How it is built: I took the real minute-by-minute moves of EURUSD and, in blocks of 30 to 60 minutes, flipped a coin to decide whether each block goes up or down. The result is a made-up market that moves just as strongly as the real one but has no direction. I made 100 of them and ran the whole process on each.\n\nWhat came out\nThe best pilot was the simplest: PID control with the bounce strategies. Over 3 years it made 816 trades and, risking 1% per trade, ended about +23%, with a drop of around 30% along the way in late 2024. On the made-up markets, the same process lost.\n\nNow, calmly: I tested many variants, and among so many some can shine by luck. Also, almost all the progress came in 2025. So I see it as promising, not confirmed yet. AI and fuzzy logic did not improve on classic PID: here, simple won.\n\nThe script on this chart (\"L117: sistema que se recalibra solo\", author hectorldu) shows every trade and every recalibration with its reason. The next round, on every market and five timeframes, comes out around 18 November.\n\nEducational content. Not investment advice."
+},
+{
+"id": "RULE_EN",
+"site": "www",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "My rule against\na coin toss",
+"studies": [
+"Average True Range"
+],
+"title": "I tested my trading rule against a coin toss",
+"body": "I had a trading rule I liked: a stop at 3 times the average candle range (ATR) and a target equal to what I risked. Before using it any longer, I ran a test I recommend to everyone: compare it with random entries.\n\nHow the \"coin toss\" is built\nOn the same markets and the same trading sessions, instead of waiting for my entry signal, I entered at moments picked at random, like drawing a time out of a hat, and kept exactly the same stop and target. With thousands of random entries, luck evens out. If my rule is useful, it has to beat that clearly.\n\nThe test\n- 108 markets (currencies, indices, metals, commodities), from 2016 to 2026.\n- Thousands of trades, with the real costs of trading.\n\nWhat came out\n- After costs, my rule and the coin ended up in practically the same place: both lost, and by almost the same amount.\n- Before costs, both were close to zero.\n- Only 6 of the 108 markets came out positive, and only just.\n\nWhat I take away\n- My entry added no information: costs decided the result.\n- This test saved me months (and money) trading something with no edge.\n- It is easy to do with any rule: if it does not clearly beat the coin, keep looking.\n\nEducational content. Not investment advice."
+},
+{
+"id": "SWAP_EN",
+"site": "www",
+"symbol": "NASDAQ:NDX",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Fundamental analysis",
+"Beyond technical analysis",
+"Trend analysis"
+],
+"label": "Nasdaq overnight with CFDs:\n+6.7% rise, -11.5% swap",
+"studies": [
+"Moving Average"
+],
+"title": "The hidden cost of holding the Nasdaq overnight with CFDs",
+"body": "A curious fact: a good part of the rise in US indices happens outside stock market hours, overnight. It looks like an opportunity: buy at the close and sell at the open.\n\nI measured it from 2021 to 2026 on the Nasdaq 100 traded with CFDs, the instrument many prop-firm accounts and brokers use.\n\nWhat came out\n- What the index rose overnight: about +6.7% a year.\n- What the broker charges to keep the position open from one day to the next (the \"swap\"): about -11.5% a year.\n- Result: about -4.8% a year.\nThe Dow Jones was the same: +4.7% of rise, -9.9% of swap.\n\nWhat I take away\n- An effect you can see in the data cannot always be captured: it depends on how much the instrument you use costs.\n- With CFDs, holding positions overnight has a daily cost that adds up a lot over time.\n- Before trading an idea, check your broker's swap and compare it with what you expect to earn.\n\nEducational content. Not investment advice."
+},
+{
+"id": "COSTS_EN",
+"site": "www",
+"symbol": "FX:EURUSD",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Fundamental analysis",
+"Beyond technical analysis",
+"Technical indicators"
+],
+"label": "How much does trading cost?\nFTMO · IBKR · futures · Binance",
+"studies": [],
+"title": "How much does trading cost? FTMO, IBKR, futures and Binance",
+"body": "The same strategy can win in one place and lose in another just because of costs. I compared what it costs to open and close one trade in different places. I use \"basis points\": 1 basis point is 0.01% of what you trade (on 10,000 dollars, 1 dollar).\n\nCurrencies\n- FTMO prop account: 1.7\n- ECN broker or Interactive Brokers (IBKR): 1.9\n\nIndices\n- FTMO (CFD): 2.1\n- Micro futures: 1.5\n\nStocks\n- FTMO (CFD): 14.5\n- IBKR: 2.0\n\nCrypto\n- FTMO (CFD): 18\n- Binance with a market order: 13\n- Binance with a limit order: 4\n\nWhat I take away\n- In currencies and indices, costs are similar almost everywhere.\n- In stocks and crypto the difference is huge: stocks via CFD cost about 7 times more than at IBKR.\n- In crypto, using limit orders instead of market orders cuts the cost to less than a third.\n- Before deciding whether a strategy works, give it the real cost of the place where you will trade it.\n\nEducational content. Not investment advice."
+},
+{
+"id": "SPREAD_EN",
+"site": "www",
+"symbol": "FX:EURUSD",
+"interval": "15",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "The 01:00 trap\n(the spread shoots up)",
+"studies": [],
+"title": "The 01:00 trap: a pattern that was really the spread",
+"body": "The spread is the difference between the price you can buy at and the price you can sell at. It is usually small, but at some hours it shoots up.\n\nIn my tests, a currency pattern looked excellent: entering at 01:00 server time, right after the broker's day change, gave very consistent gains in the backtest.\n\nI checked it with the real buy and sell prices, tick by tick, on 18 currency pairs and more than 8,000 days:\n- In the backtest, which used only one price, it clearly won.\n- With the real buy price, it lost.\n- At that time the spread was about 3 times its usual level for the hour, and it ate the whole gain.\n- Entering a few minutes later still did not work.\n\nWhat I take away\n- If a backtest looks too good at one specific time, check the spread at that time.\n- Low-liquidity hours (session change, night, news) are the most misleading.\n- Testing with real buy and sell prices avoids a lot of surprises.\n\nEducational content. Not investment advice."
+},
+{
+"id": "AI_EN",
+"site": "www",
+"symbol": "BINANCE:BTCUSDT",
+"interval": "D",
+"type": "Tutorial",
+"cats": [
+"Beyond technical analysis",
+"Technical indicators",
+"Trend analysis"
+],
+"label": "AI predicts how much price moves\nbetter than where it goes",
+"studies": [
+"Historical Volatility"
+],
+"title": "AI to predict up or down: what I learned",
+"body": "I trained several artificial intelligence models (decision trees, neural networks and an already-trained time-series model) to predict whether price would go up or down.\n\nWhat happened\n- On the data they learned from, the results were spectacular.\n- On new data they had not seen, the edge disappeared: they got the direction right about as often as a coin toss, and after costs they lost a little.\n\nWhy it happens: a model with a lot of capacity memorises the details of the past, noise included. It is like a student who memorises the answers to one exam: great on that exam, bad on the next one.\n\nWhat did work\nPredicting how much price will move (volatility), not where. Busy periods tend to stay busy and quiet ones tend to stay quiet. The indicator on this chart shows that volatility.\n\nWhat I take away\n- Always test models on data they did not use to learn.\n- AI is more useful for sizing a position according to how busy the market is than for guessing direction.\n\nEducational content. Not investment advice."
+}
+]
