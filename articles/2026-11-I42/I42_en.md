@@ -2,7 +2,7 @@
 
 *BTC fell 14% in three days. We tell, without makeup, how the portfolio reacted, whether we picked the coins well (against 1,000 random portfolios) and why we are not selling.*
 
-Today, 14 November, the crypto market fell hard: BTC touched 64,400 dollars, 14% less than three days ago, and the whole market lost 9% in 24 hours. This is the update of our real portfolio, in percentages only.
+Today, 14 November, the crypto market fell hard: the price of BTC touched 64,400, 14% less than three days ago, and the whole market lost 9% in 24 hours. This is the update of our real portfolio, in percentages only.
 
 ## Where we stand
 

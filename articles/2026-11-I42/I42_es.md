@@ -2,7 +2,7 @@
 
 *BTC bajó un 14 % en tres días. Contamos sin maquillaje cómo reaccionó la cartera, si elegimos bien las monedas (frente a 1.000 carteras al azar) y por qué no vendemos.*
 
-Hoy, 14 de noviembre, el mercado cripto cayó fuerte: BTC tocó los 64.400 dólares, un 14 % menos que hace tres días, y el mercado completo perdió un 9 % en 24 horas. Esta es la actualización de nuestra cartera real, solo en porcentajes.
+Hoy, 14 de noviembre, el mercado cripto cayó fuerte: el precio de BTC tocó 64.400, un 14 % menos que hace tres días, y el mercado completo perdió un 9 % en 24 horas. Esta es la actualización de nuestra cartera real, solo en porcentajes.
 
 ## Cómo vamos
 
