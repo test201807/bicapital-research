@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acumulación contracíclica de Bitcoin</title>
+<meta name="description" content="BICAPITAL · Nota de investigación 01. Una compra de Bitcoin financiada con deuda pequeña y plan de amortización, publicada antes de conocer su resultado: tesis, evidencia a favor y en contra, riesgo real, contexto del portafolio y criterios de evaluación.">
+<style>
+:root{--bg:#f7f8fa;--panel:#ffffff;--ink:#14202e;--ink-2:#3f4d63;--ink-3:#6b788c;--line:#dfe4ea;--acc:#1a7f76;--acc-soft:#e3f2f0;--warn:#a35f00;--warn-soft:#fdf3e2;--neg:#c23b3b;--pos:#1a7f4b;--pos-soft:#e5f4ea;--neg-soft:#fbe9e9;--s1:#2a78d6;--s2:#1baf7a;--s3:#eda100;--s4:#e34948}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f1620;--panel:#17212d;--ink:#e8edf3;--ink-2:#b9c4d2;--ink-3:#8593a5;--line:#2a3746;--acc:#4cc2b5;--acc-soft:#16302e;--warn:#f0b04a;--warn-soft:#33281a;--neg:#f07a7a;--pos:#5fd39a;--pos-soft:#15301f;--neg-soft:#3a1d1d;--s1:#5c9de6;--s2:#3fcf98;--s3:#f2b93a;--s4:#f07a7a}}
+:root[data-theme="dark"]{--bg:#0f1620;--panel:#17212d;--ink:#e8edf3;--ink-2:#b9c4d2;--ink-3:#8593a5;--line:#2a3746;--acc:#4cc2b5;--acc-soft:#16302e;--warn:#f0b04a;--warn-soft:#33281a;--neg:#f07a7a;--pos:#5fd39a;--pos-soft:#15301f;--neg-soft:#3a1d1d;--s1:#5c9de6;--s2:#3fcf98;--s3:#f2b93a;--s4:#f07a7a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Iowan Old Style","Times New Roman",serif}
+main{max-width:820px;margin:0 auto;padding:32px 16px 72px}
+.sans,h1,h2,h3,.kicker,.meta,table,.kpi,nav,figcaption,.tag,.box h4,footer{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:26px}
+.kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:700}
+h1{font-size:clamp(30px,5.4vw,44px);line-height:1.12;margin:10px 0 12px;letter-spacing:-.01em}
+h2{font-size:25px;line-height:1.25;margin:52px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
+h2 small{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:4px}
+h3{font-size:18px;margin:26px 0 6px}
+p{margin:10px 0}
+.lead{font-size:20px;line-height:1.5;color:var(--ink-2)}
+.meta{font-size:13px;color:var(--ink-3);line-height:1.5}
+nav{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:22px 0;font-size:14px}
+nav ol{margin:6px 0 0;padding-left:20px;columns:2;column-gap:28px}
+nav a{color:var(--ink-2);text-decoration:none}nav a:hover{color:var(--acc)}
+@media (max-width:620px){nav ol{columns:1}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi b{display:block;font-size:24px;line-height:1.2}
+.kpi span{font-size:13px;color:var(--ink-3)}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:16px 0}
+.box h4{margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.06em}
+.note{border-left:4px solid var(--acc);background:var(--acc-soft)}
+.warn{border-left:4px solid var(--warn);background:var(--warn-soft)}
+.pro{border-left:4px solid var(--pos);background:var(--pos-soft)}
+.con{border-left:4px solid var(--neg);background:var(--neg-soft)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:680px){.grid2{grid-template-columns:1fr}}
+.tbl{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--panel)}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--ink-3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.l,th.l{text-align:left;white-space:normal}
+.neg{color:var(--neg)}.pos{color:var(--pos)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.t-pass{color:var(--pos)}.t-fail{color:var(--neg)}.t-ind{color:var(--warn)}
+ul,ol{padding-left:22px}li{margin:5px 0}
+blockquote{margin:16px 0;padding:6px 18px;border-left:3px solid var(--line);color:var(--ink-2);font-style:italic}
+figure{margin:18px 0}figcaption{font-size:13px;color:var(--ink-3);margin-top:6px}
+svg text{fill:var(--ink-2);font:12px system-ui,sans-serif}
+.src{font-size:12px;color:var(--ink-3)}
+footer{margin-top:56px;border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--ink-3);line-height:1.55}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="kicker">BICAPITAL · Nota de investigación 01 · Publicada antes del resultado</div>
+  <h1>Bitcoin a mitad de precio: comprar con deuda pequeña, diseñar para sobrevivir</h1>
+  <p class="lead">El 24 de noviembre de 2026, con Bitcoin un 52 % por debajo de su máximo, financiamos una compra adicional de BTC con un préstamo pequeño y un plan para devolverlo en el primer rebote. Esta nota cuenta la tesis, por qué la hicimos, qué la respalda, qué la contradice, cuánto riesgo hay de verdad y cómo la vamos a juzgar. La publicamos antes de saber cómo termina.</p>
+  <p class="meta">Decisión: 24-11-2026, 21:36 hora de Ecuador (02:36 UTC del 25-11). Datos de mercado y de cartera de ese día, con BTC en ~59.200 USDT. Las cifras de patrimonio se expresan en porcentajes; no se publican montos ni saldos. Capital propio. No es una oferta, ni gestión de carteras para terceros, ni asesoría de inversión.</p>
+</header>
+
+<nav aria-label="Contenido">
+  <b class="sans">Contenido</b>
+  <ol>
+    <li><a href="#resumen">Resumen</a></li>
+    <li><a href="#por-que-publicar">Por qué publicar antes</a></li>
+    <li><a href="#portafolio">El portafolio: BTC como ancla</a></li>
+    <li><a href="#operacion">La operación, paso a paso</a></li>
+    <li><a href="#tesis">La tesis de inversión</a></li>
+    <li><a href="#favor">Evidencia a favor</a></li>
+    <li><a href="#contra">Evidencia en contra</a></li>
+    <li><a href="#asimetria">La asimetría que buscamos</a></li>
+    <li><a href="#plan">El plan de amortización</a></li>
+    <li><a href="#riesgo">Riesgo real</a></li>
+    <li><a href="#contingencias">Contingencias pactadas</a></li>
+    <li><a href="#estadistica">Lo que la estadística puede y no puede decir</a></li>
+    <li><a href="#alternativas">Alternativas consideradas</a></li>
+    <li><a href="#auditoria">Auditoría independiente</a></li>
+    <li><a href="#juicio">Cómo vamos a juzgarla</a></li>
+    <li><a href="#lecciones">Qué aprendimos</a></li>
+  </ol>
+</nav>
+
+<section id="resumen">
+  <h2><small>01</small>Resumen</h2>
+  <div class="kpis">
+    <div class="kpi"><b>−52 %</b><span>BTC desde su máximo el día de la compra</span></div>
+    <div class="kpi"><b>59.255</b><span>Precio de compra de BTC (USDT)</span></div>
+    <div class="kpi"><b>+34 %</b><span>Más unidades de BTC tras la compra</span></div>
+    <div class="kpi"><b>1,14×</b><span>Apalancamiento de toda la cartera</span></div>
+    <div class="kpi"><b>−73 %</b><span>Caída adicional que haría falta para liquidar</span></div>
+    <div class="kpi"><b>+5,8 %</b><span>BTC permanente si el plan se completa</span></div>
+  </div>
+  <p>BICAPITAL es un portafolio cripto de capital propio construido sobre una idea: <b>Bitcoin es el ancla y las altcoins son la apuesta.</b> Cuando BTC cayó a la mitad de su máximo, decidimos acumular más del ancla. No lo hicimos con dinero nuevo, sino con un préstamo pequeño en margen aislado, usando nuestro propio BTC como garantía. La deuda equivale a ~14 % del patrimonio total del portafolio y a ~34 % del valor de la posición original de BTC.</p>
+  <p>El préstamo no busca multiplicar ganancias. Es un <b>puente temporal</b>. Dos órdenes de venta ya colocadas lo devuelven en el rebote: la primera a 65.000 cancela cerca de la mitad, y la segunda a 80.000 cancela el resto. Si las dos se ejecutan, terminamos sin deuda, con <b>~5,8 % más BTC</b> que antes y con un costo económico por BTC ~5,4 % más bajo. Si BTC sigue cayendo, la liquidación queda un 73 % más abajo (en ~15.900), y hay contingencias escritas antes de que haga falta usarlas.</p>
+  <div class="box warn"><h4>Lo reconocemos de entrada</h4><p>Esta operación está fuera de nuestro propio reglamento, que dice "solo spot, sin margen". Es una excepción discrecional del gestor. La sometimos a una auditoría independiente, cuyo dictamen completo está en la sección 14, con sus "no pasa".</p></div>
+</section>
+
+<section id="por-que-publicar">
+  <h2><small>02</small>Por qué publicar antes del resultado</h2>
+  <p>Contar una operación cuando ya salió bien es fácil y no demuestra nada: cualquiera puede elegir sus aciertos después. Lo difícil, y lo útil, es dejar por escrito <i>antes</i> la tesis, el tamaño, los riesgos, el plan y los criterios con que la vamos a juzgar.</p>
+  <p>Si la operación sale mal, este documento mostrará si fue una mala decisión o una buena decisión con mala suerte. Si sale bien, mostrará si acertamos por las razones correctas. En los dos casos, la calidad de una decisión se mide con la información que había al tomarla, no con lo que pasó después.</p>
+  <p>Nos comprometemos a publicar el seguimiento en la revisión del <b>24 de diciembre de 2026</b> (o en la primera venta, si ocurre antes) y al <b>cierre</b> de la operación, sin cambiar los criterios de la sección 15.</p>
+</section>
+
+<section id="portafolio">
+  <h2><small>03</small>El portafolio: Bitcoin como ancla, altcoins como apuesta</h2>
+  <p>BICAPITAL arrancó el 20 de agosto de 2026 en Binance. Su arquitectura tiene tres capas:</p>
+  <div class="tbl"><table>
+    <tr><th class="l">Capa</th><th class="l">Función</th><th class="l">Regla</th></tr>
+    <tr><td class="l"><b>Bitcoin (~40 %)</b></td><td class="l">Núcleo patrimonial. Es lo menos volátil del portafolio y lo que lo sostiene en las caídas.</td><td class="l">Banda de 35 a 45 %, rebalanceo cuando se sale</td></tr>
+    <tr><td class="l"><b>21 altcoins (~60 %)</b></td><td class="l">Exposición especulativa, a partes iguales. Pueden caer 50, 70 o 90 %; están para capturar las subidas grandes.</td><td class="l">Banda de ±50 % de su peso; las de oferta pesada no se reponen</td></tr>
+    <tr><td class="l"><b>Deuda temporal (nueva)</b></td><td class="l">Acumular BTC en depreciaciones profundas.</td><td class="l">Solo BTC, nunca alts; tamaño pequeño; amortización obligatoria</td></tr>
+  </table></div>
+  <p>La lógica del gestor, con sus palabras: <i>"Bitcoin es el ancla de la cual nos vamos a sostener para evitar tanta volatilidad. Lo demás podrá caer 90, 50, 60, 70 %, pero lo que nos sostiene vivos es Bitcoin."</i> Por eso la deuda se usa solo para BTC y las alts quedan como están.</p>
+
+  <h3>Cómo le ha ido al portafolio (índice: 1.000 = lo aportado)</h3>
+  <div class="tbl"><table>
+    <tr><th class="l">Momento</th><th>Portafolio</th><th>Solo BTC, mismas entradas</th><th class="l">Lectura</th></tr>
+    <tr><td class="l">Máximo, 6-oct-2026</td><td class="pos">+21,3 %</td><td class="pos">+6,8 %</td><td class="l">Las alts multiplicaron la subida de BTC por ~3</td></tr>
+    <tr><td class="l">14-nov-2026</td><td class="neg">−23,3 %</td><td class="neg">−19,1 %</td><td class="l">…y también amplificaron la caída</td></tr>
+    <tr><td class="l">24-nov-2026, día de la operación</td><td class="neg">≈ −30 %</td><td class="neg">≈ −26 %</td><td class="l">Caída amplia de todo el mercado (aproximado)</td></tr>
+  </table></div>
+  <p>El portafolio se comportó como lo diseñamos: sube más que BTC y cae más que BTC. Devolvió entera la ventaja de octubre, y BTC amortiguó la caída. La investigación propia de BICAPITAL antes de esta operación dejó cinco conclusiones:</p>
+  <ul>
+    <li><b>Elegir monedas no dio ventaja.</b> Contra 1.000 carteras de 21 altcoins sorteadas al azar, con la misma regla, nuestra cesta quedó en el percentil 48, justo en la mitad. Lo que aporta es la amplitud, no la puntería.</li>
+    <li><b>Lo que más pesó fue cuándo entró el dinero.</b> Parte del capital se invirtió entre septiembre y octubre, más caro. Por eso el −23 % real se compara con un −13 % de la misma cesta comprada de una vez el 20 de agosto. Es la razón de fondo para preferir comprar en las caídas.</li>
+    <li><b>Las caídas recientes de las alts fueron de mercado, no de fundamentales.</b> Desde el 6-oct, BTC cayó un 15 % y la alt mediana un 33 %. Las monedas con tesis intacta y las debilitadas cayeron igual. En los días rojos, la alt típica cae ~1,9 veces lo que cae BTC.</li>
+    <li><b>Las reglas simples ganaron a las complicadas.</b> Probamos la cosecha de picos a liquidez, bandas por volatilidad, un freno integral y un controlador PID completo. Ninguno superó a la regla de bandas fija en los cuatro periodos de prueba (2020-2026).</li>
+    <li><b>Revisión de tesis de las 21 alts (12-nov):</b> 11 intactas, 9 debilitadas y 1 rota (ORCA, por un cambio de gobernanza que pasó las comisiones al equipo).</li>
+  </ul>
+
+  <h3>El portafolio antes y después de la operación</h3>
+  <div class="tbl"><table>
+    <tr><th class="l">Concepto</th><th>Antes</th><th>Después</th></tr>
+    <tr><td class="l">Peso de BTC sobre el patrimonio neto</td><td>41 %</td><td>56 %</td></tr>
+    <tr><td class="l">Peso de las altcoins sobre el patrimonio neto</td><td>59 %</td><td>59 %</td></tr>
+    <tr><td class="l">Deuda sobre el patrimonio neto</td><td>0</td><td>~14 %</td></tr>
+    <tr><td class="l">Apalancamiento del portafolio</td><td>1,00×</td><td>1,14×</td></tr>
+    <tr><td class="l">Apalancamiento de la posición de BTC</td><td>1,00×</td><td>1,34×</td></tr>
+    <tr><td class="l">BTC entregado como garantía</td><td>0 %</td><td>100 % del BTC del portafolio</td></tr>
+  </table></div>
+</section>
+
+<section id="operacion">
+  <h2><small>04</small>La operación, paso a paso</h2>
+  <ol>
+    <li><b>Garantía.</b> Todo el BTC del portafolio se pasó de spot a una cuenta de margen <i>aislado</i> BTC/USDT. "Aislado" significa que el riesgo queda encerrado en esa cuenta: una liquidación no toca las altcoins ni el resto de la cartera.</li>
+    <li><b>Préstamo.</b> Se pidió en USDT una cantidad equivalente a ~34 % del valor de esa garantía. Binance permitía casi el doble; se descartó por acercar la liquidación al precio de compra.</li>
+    <li><b>Compra.</b> Con todo el préstamo se compró BTC a 59.255,19, en un solo fill. Las unidades de BTC del portafolio subieron un 34,3 %.</li>
+    <li><b>Salidas.</b> Se dejaron dos órdenes límite de venta: una a 65.000 y otra a 80.000. Las dos juntas venden menos BTC del que se compró, así que <b>el BTC original nunca se vende voluntariamente.</b></li>
+  </ol>
+  <div class="tbl"><table>
+    <tr><th class="l">Parámetro de la cuenta de margen</th><th>Valor</th></tr>
+    <tr><td class="l">Nivel de margen tras la compra</td><td>3,90</td></tr>
+    <tr><td class="l">Nivel de llamada de margen / liquidación (reglas de Binance)</td><td>1,10 / 1,05</td></tr>
+    <tr><td class="l">Precio de liquidación</td><td>~15.922</td></tr>
+    <tr><td class="l">Distancia hasta la liquidación</td><td>−73 %</td></tr>
+    <tr><td class="l">Tasa de interés del préstamo</td><td>~4,0 % anual (variable, cobro por hora)</td></tr>
+    <tr><td class="l">Costo de un año de intereses</td><td>~0,6 % del patrimonio del portafolio</td></tr>
+  </table></div>
+  <p>El diseño se fue afinando en la misma sesión. Primero se planteaban tres ventas iguales (65.000, 70.000 y 75.000). El gestor propuso cambiarlo: <b>vender más en el primer rebote</b> para bajar la deuda a la mitad cuanto antes, y dejar que el resto corra más con muy poco apalancamiento. Con ese cambio la liquidación tras la primera venta baja a ~9.100, frente a ~11.500 con el diseño original. Y si el plan se completa, el resultado final mejora: +5,8 % de BTC frente a +4,5 %.</p>
+</section>
+
+<section id="tesis">
+  <h2><small>05</small>La tesis de inversión</h2>
+  <blockquote>"No digo que es el suelo, digo que estamos comprando lo más cerca del suelo. No estoy probando que vayamos a ganar; estoy probando que es muy difícil perder."</blockquote>
+  <p>La tesis no consiste en adivinar el mínimo. Tiene cinco componentes que se sostienen entre sí:</p>
+  <ol>
+    <li><b>Valoración.</b> Tras una caída del 52 %, BTC cotiza cerca de lo que pagaron en promedio todos sus tenedores. Históricamente esa es una zona de acumulación.</li>
+    <li><b>Estrés del mercado.</b> Hay más BTC en pérdida que en ganancia, los vendedores realizan pérdidas y el ánimo es de miedo. Son condiciones típicas de la parte baja de los ciclos.</li>
+    <li><b>Maduración.</b> El mercado de BTC de 2026 es mucho más grande y profundo que el de 2013 o 2017. Así como es improbable que vuelva a multiplicarse por 30, también es menos probable que vuelva a caer un 90 %.</li>
+    <li><b>Tiempo.</b> 2027 es el año previo al halving de 2028. En los ciclos pasados esa fase fue de recuperación.</li>
+    <li><b>Ingeniería financiera.</b> El préstamo es pequeño, barato y se devuelve en el primer rebote. Para ganar basta con una subida de ~10 %; para perder de forma irreversible haría falta otra caída del 73 %.</li>
+  </ol>
+  <p>La pregunta que importa no es "¿subirá BTC?", sino: <b>¿puede esta posición sobrevivir aunque la tesis tarde mucho en cumplirse?</b> El gestor lo dejó dicho: si BTC pasa un año entero entre 20.000 y 50.000, la posición se aguanta, se pagan los intereses y se espera. Lo único que se busca evitar es la pérdida irreversible, es decir, la liquidación.</p>
+</section>
+
+<section id="favor">
+  <h2><small>06</small>Evidencia a favor</h2>
+
+  <h3>6.1 Indicadores on-chain: valor deprimido y estrés</h3>
+  <p>Datos recopilados el 23 y 24 de noviembre de 2026 a partir de Glassnode y BGeometrics, comparados con nuestra investigación de julio.</p>
+  <div class="tbl"><table>
+    <tr><th class="l">Indicador</th><th>Jul-2026</th><th>Nov-2026</th><th class="l">Qué indica</th></tr>
+    <tr><td class="l">MVRV (precio / precio realizado)</td><td>1,21</td><td>1,16 – 1,17</td><td class="l">Valoración más deprimida</td></tr>
+    <tr><td class="l">MVRV Z-Score</td><td>0,36</td><td>0,27</td><td class="l">Zona históricamente baja</td></tr>
+    <tr><td class="l">NUPL (ganancia latente neta)</td><td>0,19</td><td>0,13</td><td class="l">Menos ganancia acumulada</td></tr>
+    <tr><td class="l">Oferta de BTC en ganancia</td><td>53 %</td><td>46 %</td><td class="l">Más de la mitad del BTC está en pérdida</td></tr>
+    <tr><td class="l">SOPR</td><td>0,999</td><td>0,986</td><td class="l">Se vende con pérdida: capitulación parcial</td></tr>
+    <tr><td class="l">BTC sin moverse en más de 1 año</td><td>61 %</td><td>69 %</td><td class="l">Los tenedores antiguos no venden</td></tr>
+  </table></div>
+  <p class="src">Las cifras de noviembre provienen de proveedores distintos a los de julio. La comparación es orientativa. No fueron verificadas de forma independiente por la auditoría, porque la fuente propia del portafolio estaba caducada.</p>
+  <ul>
+    <li><b>BTC en ganancia, en mínimos de varios años.</b> Durante la caída hacia ~55.000, la cantidad de BTC en ganancia (~8,5 millones) fue <i>menor</i> que en el colapso de FTX de noviembre de 2022 (~8,6 millones), que marcó el suelo del ciclo anterior.</li>
+    <li><b>Acumulación selectiva.</b> Las entidades que tienen entre 100 y 10.000 BTC estaban acumulando, con un puntaje de tendencia de acumulación de ~0,7 en los últimos 15 días. Los más pequeños y los más grandes estaban distribuyendo.</li>
+    <li><b>Precios de costo como referencia.</b> El precio realizado del mercado estaba en ~53.150, el costo de los tenedores antiguos en ~48.300 y el de los compradores recientes en ~72.500. La compra se hizo cerca del costo agregado y muy por debajo del de los compradores recientes.</li>
+    <li><b>Otros:</b> NVT Signal en ~82, lejos del umbral de distribución de 130 que usamos en julio. Reserve Risk en zona atractiva. Puell Multiple en ~0,96, sin capitulación minera extrema.</li>
+  </ul>
+
+  <h3>6.2 La historia de las grandes caídas</h3>
+  <figure>
+    <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="Caídas máximas de BTC por ciclo frente al umbral de liquidación de la operación">
+      <line x1="150" y1="20" x2="150" y2="220" stroke="currentColor" opacity=".2"/>
+      <g>
+        <text x="140" y="44" text-anchor="end">2011</text><rect x="152" y="32" width="397" height="18" rx="3" fill="var(--s4)"/><text x="555" y="46">−92,7 %</text>
+        <text x="140" y="74" text-anchor="end">2013-2015</text><rect x="152" y="62" width="362" height="18" rx="3" fill="var(--s1)"/><text x="520" y="76">−84,5 %</text>
+        <text x="140" y="104" text-anchor="end">2017-2018</text><rect x="152" y="92" width="359" height="18" rx="3" fill="var(--s1)"/><text x="517" y="106">−83,8 %</text>
+        <text x="140" y="134" text-anchor="end">2021-2022</text><rect x="152" y="122" width="329" height="18" rx="3" fill="var(--s1)"/><text x="487" y="136">−76,7 %</text>
+        <text x="140" y="164" text-anchor="end">2026, al comprar</text><rect x="152" y="152" width="221" height="18" rx="3" fill="var(--s3)"/><text x="379" y="166">−51,6 %</text>
+      </g>
+      <line x1="525" y1="22" x2="525" y2="205" stroke="var(--s4)" stroke-dasharray="5 4" stroke-width="2"/>
+      <text x="525" y="222" text-anchor="middle">Liquidación: −87 % desde el máximo</text>
+      <text x="152" y="248">0 %</text><text x="580" y="248" text-anchor="end">−100 %</text>
+    </svg>
+    <figcaption>Caída máxima desde el pico en cada ciclo, según el recuento de Galaxy Research. Ninguna caída posterior a 2011 superó el umbral de liquidación de esta operación. Las caídas se han ido reduciendo ciclo a ciclo.</figcaption>
+  </figure>
+  <p>Si este ciclo repitiera la peor caída de los dos últimos (−84 % o −77 % desde el máximo), BTC tocaría fondo entre ~19.300 y ~27.500: <b>muy por encima de la liquidación</b>. Solo una caída al estilo de 2011, cuando BTC era un mercado diminuto, la alcanzaría.</p>
+
+  <h3>6.3 Un mercado más grande y más maduro</h3>
+  <p>Según Fidelity Digital Assets (mayo de 2026), en el último máximo la capitalización de BTC era más de 200 veces la de 2013, unas 10 veces la de 2017 y el doble de la de 2021. Su volatilidad realizada viene bajando de ciclo en ciclo. La tesis de que los ciclos de "subidas explosivas y caídas del 80 %" pierden intensidad tiene respaldo, aunque no es una ley.</p>
+
+  <h3>6.4 El año previo al halving</h3>
+  <div class="tbl"><table>
+    <tr><th class="l">Año previo al halving</th><th>Enero</th><th>Primer trimestre</th><th>Año completo</th></tr>
+    <tr><td class="l">2015</td><td class="neg">−27 %</td><td class="neg">−20 %</td><td class="pos">+38 %</td></tr>
+    <tr><td class="l">2019</td><td class="neg">−10 %</td><td class="pos">+6 %</td><td class="pos">+87 %</td></tr>
+    <tr><td class="l">2023</td><td class="pos">+38 %</td><td class="pos">+69 %</td><td class="pos">+154 %</td></tr>
+    <tr><td class="l">2027</td><td>?</td><td>?</td><td>?</td></tr>
+  </table></div>
+  <p>Los tres años previos al halving terminaron en positivo. El matiz importa: enero fue alcista solo en uno de los tres. La recuperación suele llegar ese año, pero no necesariamente al principio.</p>
+
+  <h3>6.5 La investigación propia (BTC Cycle v5.9, julio 2026)</h3>
+  <p>Nuestro estudio de cuatro ciclos encontró que los días en que BTC estuvo en zona de valor (MVRV-Z menor que 0,5) tuvieron un retorno positivo a 24 meses en el 97-100 % de los casos. Es la base de la tesis de que comprar en zona de valor ha pagado históricamente si se aguanta lo suficiente. El mismo estudio pide cautela: esos días no son eventos independientes, y la estrategia completa no superó a mantener BTC en los dos ciclos reales.</p>
+
+  <h3>6.6 El contexto macro que podría ayudar</h3>
+  <p>BTC está cada vez más ligado a los mercados de riesgo: el FMI documentó que la entrada institucional aumentó su correlación con la bolsa y su sensibilidad a la política monetaria. La caída de noviembre coincidió con caídas en las tecnológicas. El mecanismo que el gestor anticipa es: mercados que caen, economía que se enfría, inflación que cede, tasas que bajan y activos de riesgo que se recuperan. Es económicamente plausible. Al 24-nov, la Fed estaba en 3,75-4,00 % y el bono a 10 años en ~4,9 %, con espacio para bajar.</p>
+</section>
+
+<section id="contra">
+  <h2><small>07</small>Evidencia en contra</h2>
+  <p>Una tesis que solo lista lo que la favorece no es una tesis, es una esperanza. Esto es lo que juega en contra, y lo publicamos igual.</p>
+  <div class="grid2">
+    <div class="box con"><h4>Valoración</h4><p>Ningún suelo de ciclo anterior se formó con el MVRV tan alto. Los mínimos fueron 0,69 (dic-2018), 0,88 (mar-2020) y 0,75 (nov-2022), según Coin Metrics. Con el precio realizado actual, esos niveles equivalen a BTC entre <b>~37.000 y ~47.000</b>. Hay zona de valor, pero todavía no hay capitulación.</p></div>
+    <div class="box con"><h4>Tendencia</h4><p>El precio está bajo una media de 200 días que sigue bajando. Nuestras dos compuertas de entrada decían <b>esperar</b>: la de julio pedía zona de valor más recuperación de la media de 200 días, y la vigente pedía datos on-chain frescos, que no teníamos.</p></div>
+    <div class="box con"><h4>Flujos</h4><p>Los ETF de BTC en EE. UU. tuvieron salidas de ~1.300 a 1.700 millones por semana en noviembre, y el saldo de 2026 pasó a negativo. La capitalización realizada se contrajo ~0,9 % en el mes. Crece la demanda de protección bajista en opciones.</p></div>
+    <div class="box con"><h4>Custodia</h4><p>El 29 de octubre Binance sufrió un hackeo de ~6.300 millones, el mayor registrado, y suspendió retiros varios días. La garantía de esta operación está en Binance: si el exchange se paraliza en plena caída, podría impedir añadir garantía a tiempo.</p></div>
+    <div class="box con"><h4>Historia reciente</h4><p>En nuestro propio estudio, las entradas en estados parecidos al actual fueron seguidas de caídas adicionales del 54 % al 64 % antes de la recuperación. Comprar en zona de valor ha funcionado, pero casi nunca en el mínimo.</p></div>
+    <div class="box con"><h4>Macro</h4><p>La Fed subió tasas en septiembre y las mantuvo en octubre, porque la inflación sigue alta. Una bajada no es inminente, y cuando llegue puede coincidir con una recesión que golpee primero a los activos de riesgo.</p></div>
+  </div>
+  <h3>Tensiones internas de la tesis</h3>
+  <ul>
+    <li><b>Maduración contra ciclo.</b> Si BTC está madurando y su volatilidad baja, el ciclo de cuatro años también podría perder fuerza. Los dos argumentos no pueden usarse a la vez con la misma confianza.</li>
+    <li><b>Indicadores redundantes.</b> MVRV, MVRV-Z, NUPL y la oferta en ganancia son casi la misma serie: bajo definiciones compatibles, NUPL = 1 − 1/MVRV. Ver los cuatro en zona de compra no son cuatro pruebas, es casi una.</li>
+    <li><b>Apalancar el ancla.</b> El activo encargado de estabilizar el portafolio es justo el que se pone como garantía. Es el punto más delicado de toda la operación.</li>
+    <li><b>Escasez no es demanda.</b> Que BTC sea escaso no garantiza que la demanda futura alcance para recuperar el precio. Ningún activo tiene la recuperación garantizada.</li>
+  </ul>
+</section>
+
+<section id="asimetria">
+  <h2><small>08</small>La asimetría que buscamos</h2>
+  <figure>
+    <svg viewBox="0 0 640 300" width="100%" role="img" aria-label="Niveles de precio relevantes de la operación">
+      <line x1="230" y1="20" x2="230" y2="285" stroke="currentColor" opacity=".25" stroke-width="2"/>
+      <g>
+        <line x1="222" y1="35" x2="238" y2="35" stroke="var(--s2)" stroke-width="3"/><text x="215" y="39" text-anchor="end">80.000</text><text x="248" y="39">Segunda venta: deuda cancelada (+35 %)</text>
+        <line x1="222" y1="55" x2="238" y2="55" stroke="var(--ink-3)" stroke-width="2"/><text x="215" y="59" text-anchor="end">72.500</text><text x="248" y="59">Costo de los compradores recientes</text>
+        <line x1="222" y1="80" x2="238" y2="80" stroke="var(--s2)" stroke-width="3"/><text x="215" y="84" text-anchor="end">65.000</text><text x="248" y="84">Primera venta: mitad de la deuda (+10 %)</text>
+        <line x1="222" y1="100" x2="238" y2="100" stroke="var(--s1)" stroke-width="4"/><text x="215" y="104" text-anchor="end">59.255</text><text x="248" y="104"><tspan font-weight="700">Compra</tspan></text>
+        <line x1="222" y1="118" x2="238" y2="118" stroke="var(--ink-3)" stroke-width="2"/><text x="215" y="122" text-anchor="end">53.150</text><text x="248" y="122">Precio realizado del mercado</text>
+        <line x1="222" y1="134" x2="238" y2="134" stroke="var(--ink-3)" stroke-width="2"/><text x="215" y="138" text-anchor="end">48.300</text><text x="248" y="138">Costo de los tenedores antiguos</text>
+        <line x1="222" y1="160" x2="238" y2="160" stroke="var(--s3)" stroke-width="2"/><text x="215" y="164" text-anchor="end">~37-47 mil</text><text x="248" y="164">Rango de suelos históricos por MVRV</text>
+        <line x1="222" y1="190" x2="238" y2="190" stroke="var(--s3)" stroke-width="2"/><text x="215" y="194" text-anchor="end">30.000</text><text x="248" y="194">Disparador de la contingencia</text>
+        <line x1="222" y1="235" x2="238" y2="235" stroke="var(--s4)" stroke-width="4"/><text x="215" y="239" text-anchor="end">15.922</text><text x="248" y="239"><tspan font-weight="700">Liquidación inicial (−73 %)</tspan></text>
+        <line x1="222" y1="265" x2="238" y2="265" stroke="var(--s4)" stroke-width="2" opacity=".6"/><text x="215" y="269" text-anchor="end">~9.100</text><text x="248" y="269">Liquidación tras la primera venta</text>
+      </g>
+    </svg>
+    <figcaption>Niveles de precio de la operación (escala no proporcional). Los precios de costo on-chain son referencias, no soportes garantizados.</figcaption>
+  </figure>
+  <p>Desde la compra, un rebote de ~10 % basta para cancelar la mitad de la deuda, y uno de ~35 % la cancela entera. Para llegar a la liquidación haría falta otra caída del 73 %, que sumada a la anterior sería una caída total del 87 % desde el máximo. Las barreras están muy lejos unas de otras, y esa es la asimetría que busca la operación.</p>
+  <div class="box note"><p><b>Un matiz honesto:</b> que una barrera esté más cerca que otra no la hace más probable en esa misma proporción. La distancia favorece la tesis, pero no es una probabilidad.</p></div>
+</section>
+
+<section id="plan">
+  <h2><small>09</small>El plan de amortización</h2>
+  <figure>
+    <svg viewBox="0 0 640 230" width="100%" role="img" aria-label="Unidades de BTC en cada etapa, en porcentaje de las originales">
+      <line x1="60" y1="190" x2="620" y2="190" stroke="currentColor" opacity=".25"/>
+      <rect x="90" y="85" width="90" height="105" rx="4" fill="var(--s1)"/><text x="135" y="77" text-anchor="middle">100 %</text><text x="135" y="208" text-anchor="middle">Antes</text>
+      <rect x="220" y="85" width="90" height="105" rx="4" fill="var(--s1)"/><rect x="220" y="49" width="90" height="34" rx="4" fill="var(--s2)"/><text x="265" y="41" text-anchor="middle">134 %</text><text x="265" y="208" text-anchor="middle">Compra con préstamo</text>
+      <rect x="350" y="85" width="90" height="105" rx="4" fill="var(--s1)"/><rect x="350" y="65" width="90" height="18" rx="4" fill="var(--s2)"/><text x="395" y="57" text-anchor="middle">119 %</text><text x="395" y="208" text-anchor="middle">Venta a 65.000</text>
+      <rect x="480" y="85" width="90" height="105" rx="4" fill="var(--s1)"/><rect x="480" y="77" width="90" height="6" rx="3" fill="var(--s2)"/><text x="525" y="69" text-anchor="middle">106 %</text><text x="525" y="208" text-anchor="middle">Venta a 80.000</text>
+      <rect x="70" y="10" width="12" height="12" rx="2" fill="var(--s1)"/><text x="88" y="21">BTC original (nunca se vende voluntariamente)</text>
+      <rect x="360" y="10" width="12" height="12" rx="2" fill="var(--s2)"/><text x="378" y="21">BTC adicional que se queda</text>
+    </svg>
+    <figcaption>Unidades de BTC en % de las originales. Las ventas son escenarios futuros, no hechos.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th class="l">Etapa</th><th>Deuda</th><th>Liquidación</th><th>Apalancamiento BTC</th><th>BTC vs original</th></tr>
+    <tr><td class="l">Hoy</td><td>100 %</td><td>~15.900</td><td>1,34×</td><td>+34 %</td></tr>
+    <tr><td class="l">Tras la venta a 65.000</td><td>~50 %</td><td>~9.100</td><td>1,15×</td><td>+19 %</td></tr>
+    <tr><td class="l">Tras la venta a 80.000</td><td>0</td><td>no existe</td><td>1,00×</td><td>+5,8 %</td></tr>
+  </table></div>
+  <h3>Qué gana el portafolio si el plan se completa</h3>
+  <ul>
+    <li><b>+5,8 % de BTC para siempre</b>, sin haber aportado capital nuevo y sin deuda al final.</li>
+    <li><b>Costo económico por BTC ~5,4 % más bajo</b> (de ~78.000 a ~73.800). La posición empieza a ganar a un precio menor.</li>
+    <li><b>Ganancia extra en cualquier subida futura:</b> cada dólar que suba BTC rinde un 5,8 % más. Si BTC llegara a 250.000, que es la proyección alcista del gestor sin fecha ni probabilidad asignada, la ventaja frente a no haber hecho nada equivaldría a ~5,8 % del valor de la posición de BTC.</li>
+    <li><b>Una opción abierta:</b> tras la primera venta, el gestor decidirá si mantiene la deuda residual (que ya es poca) para capturar más subida, o si la cancela a 80.000. No se decide hoy.</li>
+  </ul>
+  <h3>Reglas de tiempo</h3>
+  <ul>
+    <li><b>30 días</b> para la primera venta. Si no se ejecuta, se revisa la deuda y se considera amortizarla antes, sin vender a cualquier precio.</li>
+    <li>Los intereses, ~4 % anual, son el costo de esperar. Es como la prima que pagaba Michael Burry por sus seguros de impago (CDS) mientras su tesis maduraba: la estructura tiene que poder pagar el tiempo.</li>
+    <li>El colchón de las dos órdenes cubre ~2 meses de intereses. Si la recuperación tarda, la segunda orden se recalcula con la deuda real.</li>
+  </ul>
+</section>
+
+<section id="riesgo">
+  <h2><small>10</small>Riesgo real</h2>
+  <p>Distinguimos tres riesgos que suelen confundirse:</p>
+  <ol>
+    <li><b>Volatilidad:</b> que el precio baje y suba. Se acepta: el horizonte es de años.</li>
+    <li><b>Pérdida económica temporal:</b> que el patrimonio valga menos durante meses. Se acepta. Mientras se conserve el activo, se conserva la posibilidad de recuperarlo.</li>
+    <li><b>Pérdida irreversible:</b> que una liquidación venda el BTC en el peor momento y elimine la posibilidad de recuperarse. <b>Es lo único que la operación busca evitar.</b></li>
+  </ol>
+
+  <h3>Prueba de estrés a un año, con todo el portafolio</h3>
+  <p>Cambio del patrimonio neto total del portafolio si BTC y altcoins caen a la vez y no se ejecuta ninguna venta. Cada celda muestra el resultado con la operación / sin ella.</p>
+  <div class="tbl"><table>
+    <tr><th class="l">BTC llega a</th><th>Alts −30 %</th><th>Alts −50 %</th><th>Alts −70 %</th><th>Alts −90 %</th></tr>
+    <tr><td class="l">50.000</td><td class="neg">−27 / −24 %</td><td class="neg">−39 / −36 %</td><td class="neg">−50 / −48 %</td><td class="neg">−62 / −59 %</td></tr>
+    <tr><td class="l">40.000</td><td class="neg">−36 / −31 %</td><td class="neg">−48 / −43 %</td><td class="neg">−60 / −55 %</td><td class="neg">−71 / −66 %</td></tr>
+    <tr><td class="l">30.000</td><td class="neg">−46 / −38 %</td><td class="neg">−57 / −50 %</td><td class="neg">−69 / −61 %</td><td class="neg">−81 / −73 %</td></tr>
+    <tr><td class="l">20.000</td><td class="neg">−55 / −45 %</td><td class="neg">−67 / −57 %</td><td class="neg">−78 / −68 %</td><td class="neg">−90 / −80 %</td></tr>
+  </table></div>
+  <p><b>Lectura:</b> mientras BTC no baje de 20.000, el costo de haberse endeudado frente a no hacerlo está entre 3 y 10 puntos del patrimonio. Duele, pero está acotado y no amenaza la supervivencia del portafolio. A 30.000, el nivel de margen sería ~1,98, casi el doble del umbral de liquidación de 1,05.</p>
+
+  <h3>El riesgo grave: la liquidación</h3>
+  <ul>
+    <li>Hace falta una caída total del <b>87 %</b> desde el máximo. Ocurrió una vez, en 2011, cuando BTC era un mercado diminuto. En 2015 se quedó cerca (−84,5 % a −87 %, según la fuente) y en 2018 y 2022 no se alcanzó.</li>
+    <li>Si ocurriera, se vendería a la fuerza <b>todo el BTC del portafolio</b>, incluido el original. Esa es la consecuencia del diseño: todo el ancla está en garantía.</li>
+    <li>El margen aislado protege a las altcoins de la liquidación. Pero en ese escenario las altcoins habrían caído también un 70-90 %, así que no sirven como rescate.</li>
+    <li>Hay riesgos que no dependen del precio: una suba fuerte de la tasa de interés (al 20 % anual, la deuda costaría ~3 % del patrimonio al año), una mecha extrema del precio índice de Binance, o que el exchange suspenda operaciones en pleno estrés.</li>
+  </ul>
+</section>
+
+<section id="contingencias">
+  <h2><small>11</small>Contingencias pactadas de antemano</h2>
+  <div class="box note">
+    <h4>Si BTC cae a 30.000</h4>
+    <p>Se compra BTC con capital propio nuevo, por una cantidad equivalente a ~la mitad del préstamo, y se añade a la garantía. A 30.000, ese dinero compra el doble de BTC que hoy, así que acumula barato y aleja la liquidación al mismo tiempo.</p>
+    <div class="tbl"><table>
+      <tr><th class="l">Con BTC en 30.000</th><th>Liquidación</th><th>Distancia</th><th>Nivel de margen</th><th>BTC vs original</th></tr>
+      <tr><td class="l">Sin hacer nada</td><td>~15.900</td><td>−47 %</td><td>1,98</td><td>+34 %</td></tr>
+      <tr><td class="l"><b>Con la contingencia</b></td><td>~12.700</td><td>−58 %</td><td>2,48</td><td>+68 %</td></tr>
+      <tr><td class="l">Alternativa: pagar la mitad del préstamo</td><td>~8.000</td><td>−73 %</td><td>3,96</td><td>+34 %</td></tr>
+    </table></div>
+    <p class="meta">Con la contingencia aplicada, aunque BTC bajara después a 20.000, el nivel de margen quedaría en ~1,65, por encima del 1,05 de liquidación.</p>
+  </div>
+  <div class="tbl"><table>
+    <tr><th class="l">Condición</th><th class="l">Acción</th></tr>
+    <tr><td class="l">BTC llega a 65.000</td><td class="l">Primera venta (automática); revisar la segunda con la deuda real</td></tr>
+    <tr><td class="l">Pasan 30 días sin la primera venta (~24-dic)</td><td class="l">Revisión obligatoria; considerar amortizar con capital propio</td></tr>
+    <tr><td class="l">BTC cae a 30.000 (nivel de margen ≈ 2,0)</td><td class="l">Contingencia: comprar BTC con capital nuevo y añadirlo como garantía</td></tr>
+    <tr><td class="l">La tasa de interés supera el 8-15 % anual</td><td class="l">Priorizar reducir la deuda</td></tr>
+    <tr><td class="l">Cualquier caída nueva</td><td class="l"><b>Nunca</b> ampliar el préstamo</td></tr>
+    <tr><td class="l">Deuda cancelada</td><td class="l">Devolver el BTC a spot y cerrar la operación</td></tr>
+  </table></div>
+</section>
+
+<section id="estadistica">
+  <h2><small>12</small>Lo que la estadística puede y no puede decir</h2>
+  <p>La pregunta del gestor es precisa: <i>¿qué tan probable es que, después de caer un 50 %, BTC caiga otro 73 %?</i> Es "la cola de la cola". La respuesta honesta tiene tres partes.</p>
+  <ul>
+    <li><b>Hay muchos días de datos, pero pocos ciclos.</b> Si BTC pasa 180 días en zona de acumulación, son 180 observaciones de un mismo episodio, no 180 eventos independientes. Con 4 ciclos sin liquidación, la estadística solo permite decir que la probabilidad está por debajo del 53 % con 95 % de confianza. Es un intervalo inútil, y por eso no fingimos una precisión que no existe.</li>
+    <li><b>Las dos caídas no son independientes.</b> No se pueden multiplicar la probabilidad de caer un 50 % y la de caer otro 73 %. En las crisis, la volatilidad se agrupa y los movimientos extremos se vuelven más probables, no menos.</li>
+    <li><b>Simulaciones exploratorias.</b> En la conversación previa a la decisión se exploraron simulaciones con distribuciones normales y Student-t a distintas volatilidades. Daban probabilidades de liquidación a un año entre menos del 1 % y ~10 %, según el supuesto. <b>No se usan como evidencia:</b> los parámetros fueron elegidos a mano, no calibrados, y no hay código reproducible. Solo muestran cuánto depende la respuesta del supuesto.</li>
+  </ul>
+  <p>Por eso la operación no se apoya en una probabilidad calculada, sino en la <b>supervivencia por diseño</b>: deuda pequeña, liquidación lejos, contingencias escritas y amortización temprana. Como dijo el gestor: <i>"No hay forma de estar seguro de que vas a ganar. Lo que intentamos es evitar que la probabilidad esté en nuestra contra."</i> Por la misma razón se descartó duplicar la posición: con el doble de préstamo, la liquidación subía a ~30.700.</p>
+  <div class="tbl"><table>
+    <tr><th class="l">Tamaño del préstamo (vs. garantía)</th><th>Apalancamiento BTC</th><th>Liquidación</th><th>Caída hasta liquidar</th></tr>
+    <tr><td class="l">~11 %</td><td>1,11×</td><td>~6.400</td><td>−89 %</td></tr>
+    <tr><td class="l">~23 %</td><td>1,23×</td><td>~11.600</td><td>−80 %</td></tr>
+    <tr><td class="l"><b>~34 % (elegido)</b></td><td><b>1,34×</b></td><td><b>~15.900</b></td><td><b>−73 %</b></td></tr>
+    <tr><td class="l">~57 %</td><td>1,57×</td><td>~22.700</td><td>−62 %</td></tr>
+    <tr><td class="l">~97 % (máximo permitido, descartado)</td><td>1,97×</td><td>~30.700</td><td>−48 %</td></tr>
+  </table></div>
+</section>
+
+<section id="alternativas">
+  <h2><small>13</small>Alternativas que consideramos</h2>
+  <div class="tbl"><table>
+    <tr><th class="l">Alternativa</th><th class="l">Ventaja</th><th class="l">Desventaja</th></tr>
+    <tr><td class="l">No hacer nada</td><td class="l">Cero riesgo nuevo</td><td class="l">No aprovecha la zona de valor para acumular el ancla</td></tr>
+    <tr><td class="l">Comprar al contado con capital nuevo</td><td class="l">El mismo BTC adicional, sin deuda ni liquidación. <b>La auditoría la considera superior si ese capital está disponible</b></td><td class="l">Exige tener el capital hoy; el excedente llega por tramos</td></tr>
+    <tr><td class="l">Vender altcoins para comprar BTC</td><td class="l">Sin deuda</td><td class="l">Vende alts en su peor momento (−33 % desde octubre) y lleva BTC igual al 56 %</td></tr>
+    <tr><td class="l">Tres compras escalonadas (59, 55 y 50 mil)</td><td class="l">Mejor precio medio si sigue cayendo</td><td class="l">Si rebota, solo se compra un tercio</td></tr>
+    <tr><td class="l">Préstamo al doble</td><td class="l">Más BTC si sube</td><td class="l">Liquidación en ~30.700: descartado</td></tr>
+    <tr><td class="l"><b>Préstamo pequeño y amortización en el rebote (elegido)</b></td><td class="l">Compra ya, en la zona de valor; acumula sin capital nuevo si el plan se completa</td><td class="l">Pone el ancla en garantía; está fuera del reglamento</td></tr>
+  </table></div>
+  <p>El préstamo funciona en la práctica como un <b>adelanto</b>. Si llega capital propio antes del rebote, la deuda se puede pagar con él y la operación queda convertida en una compra al contado a 59.255, sin riesgo de liquidación.</p>
+</section>
+
+<section id="auditoria">
+  <h2><small>14</small>Auditoría independiente</h2>
+  <p>La operación se sometió a una auditoría independiente en solo lectura. Los registros de Binance confirmaron cada cifra: préstamo, compra, garantía, órdenes, nivel de margen y liquidación. Este es su dictamen, sin editar:</p>
+  <div class="tbl"><table>
+    <tr><th class="l">Criterio</th><th class="l">Dictamen</th><th class="l">Fundamento</th></tr>
+    <tr><td class="l">Coherencia de los cálculos</td><td class="l"><span class="tag t-pass">PASA</span></td><td class="l">Todo coincide con los registros del exchange</td></tr>
+    <tr><td class="l">Cumplimiento del reglamento propio</td><td class="l"><span class="tag t-fail">NO PASA</span></td><td class="l">El reglamento prohíbe el margen y BTC queda en el 56 % (banda: 35-45 %). Es una excepción que hay que registrar</td></tr>
+    <tr><td class="l">Calidad de la tesis de entrada</td><td class="l"><span class="tag t-ind">INDETERMINADO</span></td><td class="l">Zona de valor plausible, pero sin capitulación ni confirmación; las compuertas propias decían esperar</td></tr>
+    <tr><td class="l">Riesgo de pérdida irreversible</td><td class="l"><span class="tag t-ind">INDETERMINADO</span></td><td class="l">Probabilidad baja pero no calculable; severidad máxima, porque todo el BTC está en garantía</td></tr>
+    <tr><td class="l">Robustez operativa</td><td class="l"><span class="tag t-fail">NO PASA</span></td><td class="l">Al decidir, el monitor no veía la cuenta de margen, había riesgo de exchange tras el hackeo y el autorrepago estaba por confirmar</td></tr>
+    <tr><td class="l">Rentabilidad extra demostrada</td><td class="l"><span class="tag t-ind">NO DEMOSTRADA</span></td><td class="l">Nuestras investigaciones no encontraron ventaja en gestionar BTC activamente</td></tr>
+    <tr><td class="l">Gestión del capital</td><td class="l"><span class="tag t-pass">PASA, con reservas</span></td><td class="l">Tamaño moderado, se descartó el 2×, sin ampliación automática, amortización por tramos</td></tr>
+  </table></div>
+  <div class="box"><p><b>Conclusión de la auditoría:</b> "Es una excepción financieramente acotada y sobrevivible en casi todos los caminos históricos, pero va contra la arquitectura del portafolio y no tiene una ventaja demostrada. No es una mala decisión por tamaño ni por cálculo. Vale tanto si BTC sube como si baja."</p></div>
+  <p>El gestor tomó la decisión sabiendo que salía de la regla: <i>"Yo sé que va en contra de lo que dice el portafolio, pero nos daba el espacio para tomar la decisión."</i> Publicamos las dos cosas: la decisión y el dictamen que la cuestiona.</p>
+</section>
+
+<section id="juicio">
+  <h2><small>15</small>Cómo vamos a juzgar esta operación</h2>
+  <p>Lo fijamos hoy, antes de conocer el resultado:</p>
+  <ol>
+    <li><b>Si BTC sube y se ejecutan las ventas,</b> no la llamaremos "operación genial". Diremos que la tesis no se refutó y que el plan funcionó como estaba previsto. Un acierto aislado no prueba una ventaja que se pueda repetir.</li>
+    <li><b>Si BTC queda lateral y no se ejecuta ninguna venta,</b> en la revisión del 24-dic decidiremos si pagamos la deuda con capital propio, y lo publicaremos.</li>
+    <li><b>Si BTC cae a 30.000,</b> la medida será si aplicamos la contingencia tal como está escrita: capital nuevo y sin ampliar el préstamo.</li>
+    <li><b>Si hay liquidación,</b> lo reconoceremos como un error de diseño (todo el ancla en garantía), no como mala suerte.</li>
+    <li><b>Si el plan se completa,</b> la operación se cierra y el resultado se registra aparte. Hacer otra operación parecida exigiría convertir esta excepción en una regla, con límites y evidencia.</li>
+  </ol>
+</section>
+
+<section id="lecciones">
+  <h2><small>16</small>Qué aprendimos (hasta hoy)</h2>
+  <ul>
+    <li><b>Diseñar primero para sobrevivir y después para ganar.</b> Las condiciones de supervivencia (tamaño, liquidación, contingencias) se fijaron antes que los objetivos de ganancia.</li>
+    <li><b>No hace falta acertar el suelo.</b> Basta con comprar en zona de valor y que la estructura aguante el tiempo que tarde la recuperación.</li>
+    <li><b>Una probabilidad baja de liquidación no es una probabilidad baja de pérdida.</b> Se puede perder frente a no haber hecho nada sin llegar nunca a la liquidación.</li>
+    <li><b>Separar la tesis de la protección.</b> Tener una visión alcista para 2027 y protegerse por si esa visión falla son dos decisiones distintas. La segunda es la que permite sostener la primera.</li>
+    <li><b>La evidencia tiene un límite.</b> Con pocos ciclos, simular más no da más certeza. Pasado cierto punto, lo responsable es dimensionar bien, escribir las reglas y publicar la decisión.</li>
+  </ul>
+</section>
+
+<footer>
+  <p><b>Fuentes.</b> Registros de la propia cuenta en Binance, consultados en solo lectura: préstamo, compra, garantía, órdenes y nivel de margen. Indicadores on-chain de noviembre: Glassnode y BGeometrics, recopilados el 23 y 24-11-2026 y no verificados de forma independiente. Mínimos históricos del MVRV: Coin Metrics (API comunitaria). Caídas por ciclo: Galaxy Research. Maduración del mercado: Fidelity Digital Assets (mayo 2026). Relación entre cripto y política monetaria: FMI, WP/23/163 y estudios de contagio de 2023. Hackeo de Binance: CoinDesk, CNBC y TechCrunch. Flujos de ETF: The Block y Glassnode. Analogía de Burry: Financial Crisis Inquiry Report. Investigación interna de BICAPITAL: BTC Cycle v5.9 (julio 2026), reglamento v16 de bandas, laboratorio de amplificación, revisión de tesis del 12-11 y auditoría independiente del 24-11.</p>
+  <p><b>Aviso.</b> Capital propio. Este documento no es una oferta, ni gestión de carteras para terceros, ni asesoría de inversión. Los rendimientos pasados no garantizan resultados futuros. Operar con margen puede hacer perder todo el capital dado en garantía.</p>
+</footer>
+</main>
+</body>
+</html>
